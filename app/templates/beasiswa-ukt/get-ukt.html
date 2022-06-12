@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% set filename = 'get-ukt' %}
+
+{% block css %}
+<link rel="stylesheet"
+  href="{{ url_for('static', filename='vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendors/fontawesome/all.min.css') }}">
+<style>
+  table.dataTable td {
+    padding: 15px 8px;
+  }
+
+  .fontawesome-icons .the-icon svg {
+    font-size: 24px;
+  }
+</style>
+{% endblock  %}
+
+{% block content %}
+<div class="content-wrapper container">
+  {# <div class="page-heading">
+    <h4>Data Training Beasiswa UKT</h4>
+  </div> #}
+  <div class="page-content">
+    <div class="row">
+      <div class="col-12 col-md-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              {# <h5 class="card-title">Data Penerima UKT</h5> #}
+              <a href=" {{url_for('ukt.tambahDataUkt')}} " class="btn btn-primary btn-sm">+ Tambah Data +</a>
+              <a href=" {{url_for('ukt.ujiUkt')}} " class="btn btn-success btn-sm">+ Uji Data +</a>
+              {# <hr> #}
+              <div class="table-responsive-sm">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Nama Mahasiswa</th>
+                      <th>Prodi</th>
+                      <th>Smstr</th>
+                      <th class="text-center">Status</th>
+                      <th class="text-center">KIP</th>
+                      <th>Penghasilan</th>
+                      <th>Tanggungan</th>
+                      <th>PKH</th>
+                      <th>Kelayakan</th>
+                      <th class="text-center">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for data in response.get('data') %}
+                    <tr>
+                      <td>{{ data.nama }}</td>
+                      <td>{{ data.prodi }}</td>
+                      <td class="text-center">{{ data.semester }}</td>
+                      <td>{{ data.status_mhs | capitalize }}</td>
+                      <td>{{ data.terima_kip_bm | capitalize}}</td>
+                      <td>{{ data.penghasilan_orang_tua }}</td>
+                      <td class="text-center">{{ data.jml_tanggungan }}</td>
+                      <td>{{ data.pkh | capitalize }}</td>
+                      <td>{{ data.keputusan | capitalize }}</td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-placement="top"
+                          title="Detail Data {{ data.nama }}" data-bs-target="#modal-detaill{{data.id}}">
+                          <i class="fa fa-eye"></i>
+                        </button>
+                        <a href="{{url_for('ukt.getByIdUkt', id=data.id)}}" class="btn btn-sm btn-outline-warning"
+                          data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data {{ data.nama }}">
+                          <i class="fa fa-pen"></i>
+                        </a>
+
+                        {#<a href="" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-placement="top"
+                          title="Hapus Data {{ data.nama }}" data-bs-target="#hapusModal{{data.id}}">
+                          <i class="fa fa-trash"></i>
+                        </a>#}
+                      </td>
+                    </tr>
+                    {% include "modal/modal-delete-ukt.html" %}
+                    {% include "modal/modal-detail-ukt.html" %}
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination pagination-primary pagination-sm justify-content-end">
+                    {% if response['meta']['has_prev'] %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ response.get('meta').get('prev_page')}}">
+                        <span aria-hidden="true"><i class="bi bi-chevron-left"></i></span>
+                      </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                        <span aria-hidden="true"><i class="bi bi-chevron-left"></i></span>
+                      </a>
+                    </li>
+                    {% endif %}
+                    {% for pages in range(response.get('meta').get('pages')) %}
+                    <li class="page-item {{'active' if pages == response.get('meta').get('page') -1 else ''}}"><a
+                        class="page-link" href="?page={{pages + 1}}">{{pages + 1}}</a></li>
+                    {% endfor %}
+                    {% if response['meta']['has_next'] %}
+                    <li class="page-item"><a class="page-link" href="?page={{ response.get('meta').get('next_page')}}">
+                        <span aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+                      </a></li>
+                    {% else %}
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                        <span aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+                      </a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+
+<script src="{{url_for('static', filename='vendors/jquery/jquery.min.js')}}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js')}}">
+</script>
+<script src="{{ url_for('static', filename='vendors/fontawesome/all.min.js')}}"></script>
+{% endblock  %}

@@ -22,7 +22,11 @@
 {% endblock  %}
 
 {% block content %}
+
+
+
 <div class="content-wrapper container">
+  
   {# <div class="page-heading">
     <h4>Form Tambah Data UKT</h4>
   </div> #}
@@ -38,8 +42,93 @@
               <div class="row">
                 <div id="form" class="col-md-7">
                   <form method="post" class="form form-horizontal">
+                    {{ form.csrf_token }}
                     <div class="form-body">
                       <div class="row">
+                        <h5 class="card-title">Tambah Data User</h5>
+                        <div class="col-md-4">
+                          {{ form.stambuk.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                        {% if form.stambuk.errors %}
+                        {{ form.stambuk(class="form-control form-control-sm is-invalid", placeholder="Stambuk Mahasiswa") }}
+                        {% for error in form.stambuk.errors %}
+                        <div class="invalid-feedback">
+                          {{ error }}
+                        </div>
+                        {% endfor %}
+                        {% elif form.stambuk.data %}
+                        {{ form.stambuk(class="form-control form-control-sm", placeholder="Stambuk Mahasiswa") }}
+                        <div class="valid-feedback"></div>
+                        {% else %}
+                        {{ form.stambuk(class="form-control form-control-sm", placeholder="Stambuk Mahasiswa")}}
+                        {% endif %}
+                        </div>
+                        <div class="col-md-4">
+                          {{ form.nama.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.nama.errors %}
+                          {{ form.nama(class="form-control form-control-sm is-invalid", placeholder="Stambuk Mahasiswa") }}
+                          {% for error in form.nama.errors  %}
+                          <div class="invalid-feedback">
+                            {{ error }}
+                          </div>                            
+                          {% endfor %}
+                          {% elif form.nama.data %}
+                          {{ form.nama(class="form-control form-control-sm", placeholder="Nama Lengkap") }}
+                          <div class="valid-feedback"></div>                            
+                          {% else %}
+                          {{ form.nama(class="form-control form-control-sm", placeholder="Nama Lengkap") }}
+                          {% endif %}
+                        </div>
+                        <div class="col-md-4">
+                          {{ form.gender.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {{ form.gender(class="form-select form-select-sm")}}
+                        </div>
+                        <div class="col-md-4">
+                          {{ form.prodi.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {{ form.prodi(class="form-select form-select-sm")}}
+                        </div>
+                        <!-- <div class="col-md-4">
+                          {{ form.prodi.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          <select class="form-select form-select-sm" id="prodi" name="prodi" required="">
+                            <option value="">..:: Pilih ::..</option>
+                            {% for prodi in prodi %}
+                            <option value="{{prodi.jurusan}}">{{prodi.jurusan}}</option>
+                            {% endfor %}
+                          </select>
+                        </div> -->
+                        <div class="col-md-4">
+                          {{ form.email.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {{ form.email(class="form-control form-control-sm", placeholder="Email Aktif") }}
+                        </div>
+                        <div class="col-md-4">
+                          {{ form.password.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {{ form.password(class="form-control form-control-sm", placeholder="Password") }}
+                        </div>
+
+                        <div class="col-sm-12 d-flex justify-content-end">
+                          <button type="submit" class="btn btn-primary btn-sm me-1 mb-1 ">Simpan</button>
+                          <button type="reset" class="btn btn-light-secondary  btn-sm me-1 mb-1">Batal</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+                  <!-- <form method="post" class="form form-horizontal">
+                    <div class="form-body">
+                      
                         <h5 class="card-title">Tambah Data User</h5>
                         <div class="col-md-4">
                           <label>Stambuk</label>
@@ -93,7 +182,7 @@
                         </div>
                       </div>
                     </div>
-                  </form>
+                  </form> -->
                 </div>
 
               </div>

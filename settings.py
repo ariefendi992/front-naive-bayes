@@ -5,4 +5,4 @@ load_dotenv()
 
 
 class Config():
-    SECRECT_KEY = str(os.getenv('secret_key'))
+    SECRET_KEY = str(os.getenv('secret_key'))

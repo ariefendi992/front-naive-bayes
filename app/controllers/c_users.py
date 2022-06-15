@@ -1,10 +1,18 @@
 import json
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from app.url import *
+from app.lib.forms import FormRegisterUser
 import requests
 
 admin = Blueprint('admin', __name__, url_prefix='/',
                   template_folder='../templates/admin/')
+
+url = base_url + '/kategori/jurusan'
+req = requests.get(url).json()
+response = req.get('data')
+select_prodi = [('', '..:: Pilih ::..')]
+for i in response:
+    select_prodi.append((i['jurusan'], i['jurusan']))
 
 
 # dashboard
@@ -65,33 +73,78 @@ def userLogin():
 
 # user add
 @admin.route('/user-add', methods=['GET', 'POST'])
-def userAdd():
-    stambuk = request.form.get('nim')
-    nama = request.form.get('name')
-    gender = request.form.get('jk')
-    email = request.form.get('mail')
-    password = request.form.get('pswd')
+def userAdd():   
+    select_gender = [("","..:: Pilih ::.."),("laki-laki","Laki-Laki"),("perempuan","Perempuan")]
 
-    url = base_url + '/auth/register'
+    form = FormRegisterUser()
+    form.prodi.choices = select_prodi
+    form.gender.choices = select_gender
+    
+    if form.validate_on_submit() :
+        stambuk = form.stambuk.data
+        nama = form.nama.data
+        gender = form.gender.data
+        prodi = form.prodi.data
+        # prodi = request.form.get('prodi')
+        email = form.email.data
+        password = form.password.data
 
-    headers = {
-        'Content-Type': 'application/json'
-    }
+        url = base_url + '/auth/register'
+        header = {
+            'Content-Type': 'application/json'
+        }
 
-    payload = json.dumps({
-        'stambuk': stambuk,
-        'nama': nama,
-        'gender': gender,
-        'email': email,
-        'password': password
-    })
+        payload = json.dumps({
+            'stambuk': stambuk,
+            'nama' : nama,
+            'gender': gender,
+            'prodi' : prodi,
+            'email': email,
+            'password': password
+        })
 
-    r = requests.post(url=url, headers=headers, data=payload)
+        r = requests.post(url=url, headers=header, data=payload)
+        print('status code = ', r.status_code)
 
-    if r.status_code == 201:
-        return redirect(url_for('admin.userData'))
-    else:
-        return render_template('user-add.html')
+        if r.status_code == 201:
+            print('status error 201 =', r.json().get('error'))
+            return redirect(url_for('admin.userData'))
+        elif r.status_code == 409:
+            print('status error 409 =', r.json().get('error'))
+            msg = r.json().get('error')
+            flash(message=f'{msg}', category='warning')
+            # return render_template('user-add.html', form=form, prodi=response)
+        else:
+            return render_template('user-add.html', form=form, prodi=response)
+
+    return render_template('user-add.html', form=form)
+
+    # stambuk = request.form.get('nim')
+    # nama = request.form.get('name')
+    # gender = request.form.get('jk')
+    # email = request.form.get('mail')
+    # password = request.form.get('pswd')
+
+    # url = base_url + '/auth/register'
+
+    # headers = {
+    #     'Content-Type': 'application/json'
+    # }
+
+    # payload = json.dumps({
+    #     'stambuk': stambuk,
+    #     'nama': nama,
+    #     'gender': gender,
+    #     'email': email,
+    #     'password': password
+    # })
+
+    # r = requests.post(url=url, headers=headers, data=payload)
+
+    # if r.status_code == 201:
+    #     return redirect(url_for('admin.userData'))
+    # else:
+    #     return render_template('user-add.html')
 
 
 # get user by id

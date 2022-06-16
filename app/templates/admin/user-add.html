@@ -31,8 +31,7 @@
     <h4>Form Tambah Data UKT</h4>
   </div> #}
   <div class="page-content">
-    <div class="row">
-      <div class="col-12 col-md-12">
+   
         <div class="card">
           {# {% for x in resp_ukt %}
           {{x.id_user}}
@@ -86,36 +85,65 @@
                           {{ form.gender.label }}
                         </div>
                         <div class="col-md-8 form-group">
+                          {% if form.gender.errors %}
+                          {{ form.gender(class="form-control form-control-sm is-invalid", placeholder="Stambuk Mahasiswa") }}
+                          {% for error in form.gender.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.gender.data %}
                           {{ form.gender(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.gender(class="form-select form-select-sm")}}
+                          {% endif %}
                         </div>
                         <div class="col-md-4">
                           {{ form.prodi.label }}
                         </div>
                         <div class="col-md-8 form-group">
+                          {% if form.prodi.errors %}
+                          {{ form.prodi(class="form-control form-control-sm is-invalid", placeholder="Stambuk Mahasiswa") }}
+                          {% for error in form.prodi.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.prodi.data %}
                           {{ form.prodi(class="form-select form-select-sm")}}
-                        </div>
-                        <!-- <div class="col-md-4">
-                          {{ form.prodi.label }}
-                        </div>
-                        <div class="col-md-8 form-group">
-                          <select class="form-select form-select-sm" id="prodi" name="prodi" required="">
-                            <option value="">..:: Pilih ::..</option>
-                            {% for prodi in prodi %}
-                            <option value="{{prodi.jurusan}}">{{prodi.jurusan}}</option>
-                            {% endfor %}
-                          </select>
-                        </div> -->
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.prodi(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>                        
                         <div class="col-md-4">
                           {{ form.email.label }}
                         </div>
                         <div class="col-md-8 form-group">
+                          {% if form.email.errors %}
+                          {{ form.email(class="form-control form-control-sm is-invalid", placeholder="Email Aktif") }}
+                            {% for error in form.email.errors %}
+                            <div class="invalid-feedback">{{ error}}</div>  
+                            {% endfor %}
+                          {% elif form.email.data %}
                           {{ form.email(class="form-control form-control-sm", placeholder="Email Aktif") }}
+                          <div class="valid-feedback"></div>
+                          {% else %}  
+                          {{ form.email(class="form-control form-control-sm", placeholder="Email Aktif") }}
+                          {% endif %}
                         </div>
                         <div class="col-md-4">
                           {{ form.password.label }}
                         </div>
                         <div class="col-md-8 form-group">
+                          {% if form.password.errors %}
+                          {{ form.password(class="form-control form-control-sm is-invalid", placeholder="Password") }}
+                          {% for error in form.password.errors  %}
+                           <div class="invalid-feedback">{{ error }}</div> 
+                          {% endfor %}
+                          {% elif form.password.data %}
                           {{ form.password(class="form-control form-control-sm", placeholder="Password") }}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.password(class="form-control form-control-sm", placeholder="Password") }}
+                          {% endif %}
                         </div>
 
                         <div class="col-sm-12 d-flex justify-content-end">

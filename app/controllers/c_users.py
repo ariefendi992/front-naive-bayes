@@ -108,11 +108,12 @@ def userAdd():
 
         if r.status_code == 201:
             print('status error 201 =', r.json().get('error'))
+            flash(message=f'Data {nama.data} berhasil di tambahkan.', category='success')
             return redirect(url_for('admin.userData'))
-        elif r.status_code == 409:
-            print('status error 409 =', r.json().get('error'))
-            msg = r.json().get('error')
-            flash(message=f'{msg}', category='warning')
+        # elif r.status_code == 409:
+        #     print('status error 409 =', r.json().get('error'))
+        #     msg = r.json().get('error')
+        #     flash(message=f'{msg}', category='warning')
             # return render_template('user-add.html', form=form, prodi=response)
         else:
             return render_template('user-add.html', form=form, prodi=response)

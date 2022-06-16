@@ -50,3 +50,28 @@ for i in resp2:
         print('ada')
     else:
         print('tidak ada')
+
+
+# email = 'aaaa'
+# domain = {'google':'@gmail.com'}
+
+# domain = email.split('@')[1]
+
+# if domain in email:
+#     print('valid')
+# else:
+#     print('tidak')
+import re
+
+regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'  
+  
+def check(email):   
+  
+    if(re.search(regex,email)):   
+        print("Valid Email")   
+    else:   
+        print("Invalid Email")   
+
+
+email = 'ari@gmail.com'
+print(check(email))

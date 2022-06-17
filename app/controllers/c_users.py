@@ -1,7 +1,7 @@
 import json
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from app.url import *
-from app.lib.forms import FormRegisterUser
+from app.lib.forms.forms_user import FormRegisterUser
 import requests
 
 admin = Blueprint('admin', __name__, url_prefix='/',
@@ -85,7 +85,6 @@ def userAdd():
         nama = form.nama.data
         gender = form.gender.data
         prodi = form.prodi.data
-        # prodi = request.form.get('prodi')
         email = form.email.data
         password = form.password.data
 
@@ -108,44 +107,12 @@ def userAdd():
 
         if r.status_code == 201:
             print('status error 201 =', r.json().get('error'))
-            flash(message=f'Data {nama.data} berhasil di tambahkan.', category='success')
+            flash(message=f'Data {form.nama.data} berhasil di tambahkan.', category='success')
             return redirect(url_for('admin.userData'))
-        # elif r.status_code == 409:
-        #     print('status error 409 =', r.json().get('error'))
-        #     msg = r.json().get('error')
-        #     flash(message=f'{msg}', category='warning')
-            # return render_template('user-add.html', form=form, prodi=response)
         else:
             return render_template('user-add.html', form=form, prodi=response)
 
     return render_template('user-add.html', form=form)
-
-    # stambuk = request.form.get('nim')
-    # nama = request.form.get('name')
-    # gender = request.form.get('jk')
-    # email = request.form.get('mail')
-    # password = request.form.get('pswd')
-
-    # url = base_url + '/auth/register'
-
-    # headers = {
-    #     'Content-Type': 'application/json'
-    # }
-
-    # payload = json.dumps({
-    #     'stambuk': stambuk,
-    #     'nama': nama,
-    #     'gender': gender,
-    #     'email': email,
-    #     'password': password
-    # })
-
-    # r = requests.post(url=url, headers=headers, data=payload)
-
-    # if r.status_code == 201:
-    #     return redirect(url_for('admin.userData'))
-    # else:
-    #     return render_template('user-add.html')
 
 
 # get user by id
@@ -198,6 +165,6 @@ def userDelete():
     id = request.args.get('id')
     url = base_url + ('/auth/delete-user')
     r = requests.delete(url + f'?id={id}')
-
     if r.status_code == 204:
+        flash(message=f'Data telah di hapus.', category="danger")
         return redirect(url_for('admin.userData'))

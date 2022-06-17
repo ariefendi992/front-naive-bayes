@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% set filename = 'ukt-add' %}
+{% block title_page %}
+Tambah Data Pendaftar Beasiswa
+{% endblock %}
 
 {% block css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='vendors/choices.js/choices.min.css') }}" />
@@ -19,7 +22,7 @@
     text-align: justify;
   }
 </style>
-{% endblock  %}
+{% endblock %}
 
 {% block content %}
 <div class="content-wrapper container">
@@ -35,10 +38,189 @@
               <div class="row">
                 <div id="form" class="col-md-7">
                   <form method="post" class="form form-horizontal">
+                    {{ form.csrf_token }}
                     <div class="form-body">
                       <div class="row">
                         <h5 class="card-title">Tambah Data Pendaftar Beasiswa UKT</h5>
+                        
                         <div class="col-md-4">
+                          {{ form.idUser.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.idUser.errors %}
+                          {{ form.idUser(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.idUser.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.idUser.data %}
+                          {{ form.idUser(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.idUser(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                          {{ form.nik.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.nik.errors %}
+                          {{ form.nik(class="form-control form-control-sm is-invalid", placeholder="Nomor Induk Kependudukan") }}
+                          {% for error in form.nik.errors  %}
+                          <div class="invalid-feedback">
+                            {{ error }}
+                          </div>                            
+                          {% endfor %}
+                          {% elif form.nik.data %}
+                          {{ form.nik(class="form-control form-control-sm", placeholder="Nomor Induk Kependudukan") }}
+                          <div class="valid-feedback"></div>                            
+                          {% else %}
+                          {{ form.nik(class="form-control form-control-sm", placeholder="Nomor Induk Kependudukan") }}
+                          {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                          {{ form.prodi.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.prodi.errors %}
+                          {{ form.prodi(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.prodi.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.prodi.data %}
+                          {{ form.prodi(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.prodi(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                          {{ form.sms.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.sms.errors %}
+                          {{ form.sms(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.sms.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.sms.data %}
+                          {{ form.sms(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.sms(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+                        
+                        <div class="col-md-4">
+                          {{ form.statusMhs.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.statusMhs.errors %}
+                          {{ form.statusMhs(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.statusMhs.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.statusMhs.data %}
+                          {{ form.statusMhs(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.statusMhs(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+                        
+                        <div class="col-md-4">
+                          {{ form.kip.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.kip.errors %}
+                          {{ form.kip(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.kip.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.kip.data %}
+                          {{ form.kip(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.kip(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+                        
+                        <div class="col-md-4">
+                          {{ form.penghasilan.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.penghasilan.errors %}
+                          {{ form.penghasilan(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.penghasilan.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.penghasilan.data %}
+                          {{ form.penghasilan(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.penghasilan(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                          {{ form.tanggungan.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.tanggungan.errors %}
+                          {{ form.tanggungan(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.tanggungan.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.tanggungan.data %}
+                          {{ form.tanggungan(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.tanggungan(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+                        
+                        <div class="col-md-4">
+                          {{ form.pkh.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.pkh.errors %}
+                          {{ form.pkh(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.pkh.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.pkh.data %}
+                          {{ form.pkh(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.pkh(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+                        
+                        <div class="col-md-4">
+                          {{ form.keputusan.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.keputusan.errors %}
+                          {{ form.keputusan(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.keputusan.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.keputusan.data %}
+                          {{ form.keputusan(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.keputusan(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+
+                        <div class="col-sm-12 d-flex justify-content-end">
+                          <button type="submit" class="btn btn-primary btn-sm me-1 mb-1 ">Simpan</button>
+                          <button type="reset" class="btn btn-light-secondary  btn-sm me-1 mb-1">Reset</button>
+                        </div>
+
+                        <!-- <div class="col-md-4">
                           <label>Nama</label>
                         </div>
                         <fieldset class="col-md-8 form-group">
@@ -151,7 +333,7 @@
                         <div class="col-sm-12 d-flex justify-content-end">
                           <button type="submit" class="btn btn-primary btn-sm me-1 mb-1 ">Simpan</button>
                           <button type="reset" class="btn btn-light-secondary  btn-sm me-1 mb-1">Reset</button>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </form>
@@ -169,7 +351,7 @@
                       <p class="card-text">2.</p>
                     </div>
                     <div class="col-sm-11">
-                      <p class="card-text isi">Terdaftar sebagai penerima PKH / KKS, mahasiswa dari panti asuhan/panti
+                      <p class="card-text isi">Terdaftar sebagai penerima PKH/KKS, mahasiswa dari panti asuhan/panti
                         sosial</p>
                     </div>
                     <div class="col-sm-1">
@@ -221,4 +403,4 @@
 <script src="{{ url_for('static', filename='vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js')}}">
 </script>
 <script src="{{ url_for('static', filename='vendors/fontawesome/all.min.js')}}"></script>
-{% endblock  %}
+{% endblock %}

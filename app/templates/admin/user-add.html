@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-md-8 form-group">
                           {% if form.gender.errors %}
-                          {{ form.gender(class="form-control form-control-sm is-invalid", placeholder="Stambuk Mahasiswa") }}
+                          {{ form.gender(class="form-select form-select-sm is-invalid") }}
                           {% for error in form.gender.errors %}
                           <div class="invalid-feedback">{{error}}</div>
                           {% endfor %}
@@ -102,7 +102,7 @@
                         </div>
                         <div class="col-md-8 form-group">
                           {% if form.prodi.errors %}
-                          {{ form.prodi(class="form-control form-control-sm is-invalid", placeholder="Stambuk Mahasiswa") }}
+                          {{ form.prodi(class="form-select form-select-sm is-invalid") }}
                           {% for error in form.prodi.errors %}
                           <div class="invalid-feedback">{{error}}</div>
                           {% endfor %}

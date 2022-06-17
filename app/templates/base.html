@@ -1,79 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Penentuan Penerimaan Beasiswa</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Halaman | {% block title_page %} {% endblock %}</title>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
-      rel="stylesheet" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css')}}" />
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='vendors/iconly/bold.css')}}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/iconly/bold.css')}}" />
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='vendors/perfect-scrollbar/perfect-scrollbar.css')}}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='vendors/bootstrap-icons/bootstrap-icons.css')}}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css')}}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/mycss.css')}}" />
-    {% block css %}{% endblock  %}
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/logo/uim.png')}}" />
-  </head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/perfect-scrollbar/perfect-scrollbar.css')}}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/bootstrap-icons/bootstrap-icons.css')}}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css')}}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/mycss.css')}}" />
+  {% block css %}{% endblock %}
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/logo/uim.png')}}" />
+  <style>
+    .alert {
+      height: 20%;
+      /* padding: 5px; */
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
 
-  <body>
-    <div id="app">
-      <div id="main" class="layout-horizontal">
-        <header class="mb-4">
-          <!-- header top -->
-          {% include "layouts/header-top.html" %}
+    .alert-dismissible .btn-close {
+      padding: 10px;
+    }
+  </style>
+</head>
 
-          <!-- header navbar -->
-          {% include "layouts/navbar.html" %}
-        </header>
+<body>
+  <div id="app">
+    <div id="main" class="layout-horizontal">
+      <header class="mb-4">
+        <!-- header top -->
+        {% include "layouts/header-top.html" %}
 
-        <!-- flash notif -->
-        <!-- {% with messages = get_flashed_messages(with_categories = true ) %} {%
-          if messages %} {% for category, message in messages %}
-          <div class="page-content">
-              <div class="row">
-                <div class="col-12 col-md-12">
-                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                  {{ message }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-              </div>
-            </div>
-          </div>
-          {% endfor %} {% endif %} {% endwith %} -->
+        <!-- header navbar -->
+        {% include "layouts/navbar.html" %}
+      </header>
 
-        <!--- content -->
-        {% block content %}
-        {% endblock %}
-
-        <footer>
-          <div class="container">
-            <div class="footer clearfix mb-0 text-muted">
-              <div class="float-start">
-                <p>2021 &copy; Mazer</p>
-              </div>
-              {# <div class="float-end">
-                <p>
-                  Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by 
-                  <a href="http://ahmadsaugi.com">A. Saugi</a>
-                </p>
-              </div> #}
-            </div>
-          </div>
-        </footer>
+      <!-- flash notif -->
+      {% with messages = get_flashed_messages(with_categories = true ) %} 
+      {% if messages %} 
+      {% for category, message in messages %}
+      <div class="container">
+        <div class="alert alert-{{ category }} alert-dismissible fade show d-flex" role="alert">
+          <div class='title align-self-center'>{{ message }}</div>
+          <button type="button" class="btn-alert btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
       </div>
-    </div>
-    <script src="{{ url_for('static', filename='vendors/perfect-scrollbar/perfect-scrollbar.min.js')}}">
-    </script>
-    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/pages/horizontal-layout.js') }}"></script>
+      {% endfor %} 
+      {% endif %} 
+      {% endwith %}
 
-    {% block js %} {% endblock  %}
-  </body>
+
+      <!--- content -->
+      {% block content %}
+      {% endblock %}
+
+      <footer>
+        <div class="container">
+          <div class="footer clearfix mb-0 text-muted">
+            {# <div class="float-start">
+              <p>2021 &copy; Mazer</p>
+            </div>
+             <div class="float-end">
+              <p>
+                Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by
+                <a href="http://ahmadsaugi.com">A. Saugi</a>
+              </p>
+            </div> #}
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='vendors/perfect-scrollbar/perfect-scrollbar.min.js')}}">
+  </script>
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/pages/horizontal-layout.js') }}"></script>
+
+  {% block js %} {% endblock %}
+</body>
 
 </html>

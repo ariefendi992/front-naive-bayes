@@ -57,3 +57,5 @@ class FormRegisterUser(FlaskForm):
         
         elif len(password.data) < 6:
             raise ValidationError('* Password minimal 6 karakter')
+
+

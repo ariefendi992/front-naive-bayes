@@ -1,5 +1,6 @@
 import json
-from flask import Blueprint, request, render_template, redirect, url_for
+from flask import Blueprint, flash, request, render_template, redirect, url_for
+from app.lib.forms.forms_ukt import FormAddUkt
 from app.url import base_url
 import requests
 
@@ -27,53 +28,103 @@ def tambahDataUkt():
     r_user = requests.get(url_user).json()
     resp_user = r_user.get('data')
 
+    select_idUser = [('', '..:: Pilih ::..')]
+    for i in resp_user:
+        select_idUser.append((i['id'], i['nama'] +' | '+ i['stambuk'] ))
+
     url_prodi = base_url+'/kategori/jurusan'
     r_prodi = requests.get(url_prodi).json()
     resp_prodi = r_prodi.get('data')
+
+    select_prodi = [('', '..:: Pilih ::..')]
+    for i in resp_prodi:
+        select_prodi.append((i['id'], i['jurusan']))
 
     url_sms = base_url+'/kategori/semester'
     r_sms = requests.get(url_sms).json()
     resp_sms = r_sms.get('data')
 
+    select_semester = [('', '..:: Pilih ::..')]
+    for i in resp_sms:
+        select_semester.append((i['id'], i['semester']))
+
+    select_status_mhs = [('', '..:: Pilih ::..'), ('aktif', 'Aktif'), ('cuti', 'Cuti')]
+    
+    select_kip = [('', '..:: Pilih ::..'), ('terima', 'Terima'), ('tidak', 'Tidak')]
+
     url_penghasilan = base_url + '/kategori/penghasilan'
     r_penghasilan = requests.get(url_penghasilan).json()
     resp_penghasilan = r_penghasilan['data']
 
-    id_user = request.form.get('id_user')
-    nik = request.form.get('nik')
-    prodi = request.form.get('prodi')
-    sms = request.form.get('semester')
-    status_mhs = request.form.get('status_mhs')
-    kip = request.form.get('kip')
-    penghasilan = request.form.get('penghasilan_orang_tua')
-    tanggungan = request.form.get('tanggungan')
-    pkh = request.form.get('pkh')
-    keputusan = request.form.get('keputusan')
+    select_penghasilan = [('', '..:: Pilih ::..')]
+    for i in resp_penghasilan:
+        select_penghasilan.append((i['id'], i['keterangan']))
 
-    url_ukt = base_url+'/beasiswa-ukt/tambah-data'
-    headers = {
-        'Content-Type': 'application/json'
-    }
-    payload = json.dumps({
-        'id_user': id_user,
-        'nik': nik,
-        'id_prodi': prodi,
-        'id_semester': sms,
-        'status_mhs': status_mhs,
-        'kip_bm': kip,
-        'id_penghasilan': penghasilan,
-        'tanggungan': tanggungan,
-        'pkh_kks': pkh,
-        'keputusan': keputusan
-    })
+    url_tanggungan = base_url + '/kategori/tanggungan'
+    r_tanggungan = requests.get(url_tanggungan).json()
+    resp_tanggungan = r_tanggungan['data']
 
-    print('json =', payload)
-    r = requests.request('POST', url_ukt, headers=headers, data=payload)
+    select_tanggungan = [('', '..:: Pilih ::..')]
+    for i in resp_tanggungan:
+        select_tanggungan.append((i['id'], i['tanggungan']))
 
-    if r.status_code == 201:
-        return redirect(url_for('ukt.indexUkt'))
-    else:
-        return render_template('tambah-ukt.html', resp_user=resp_user, resp_prodi=resp_prodi, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan)
+    select_pkh = [('', '..:: Pilih ::..'), ('terima', 'Terima'), ('tidak', 'Tidak')]
+    
+    select_keputusan = [('', '..:: Pilih ::..'), ('layak', 'Layak'), ('tidak layak', 'Tidak Layak')]
+    
+
+    form = FormAddUkt()
+    form.idUser.choices = select_idUser
+    form.prodi.choices = select_prodi
+    form.sms.choices = select_semester
+    form.statusMhs.choices = select_status_mhs
+    form.kip.choices = select_kip
+    form.penghasilan.choices = select_penghasilan
+    form.tanggungan.choices = select_tanggungan
+    form.pkh.choices = select_pkh
+    form.keputusan.choices = select_keputusan
+
+    if form.validate_on_submit() :
+        id_user = form.idUser.data
+        nik = form.nik.data
+        prodi = form.prodi.data
+        sms = form.sms.data
+        status_mhs = form.statusMhs.data
+        kip = form.kip.data
+        penghasilan = form.penghasilan.data
+        tanggungan = form.tanggungan.data
+        pkh = form.pkh.data
+        keputusan = form.keputusan.data
+
+
+
+        url_ukt = base_url+'/beasiswa-ukt/tambah-data'
+        headers = {
+            'Content-Type': 'application/json'
+        }
+        payload = json.dumps({
+            'id_user': id_user,
+            'nik': nik,
+            'id_prodi': prodi,
+            'id_semester': sms,
+            'status_mhs': status_mhs,
+            'kip_bm': kip,
+            'id_penghasilan': penghasilan,
+            'id_tanggungan': tanggungan,
+            'pkh_kks': pkh,
+            'keputusan': keputusan
+        })
+
+        print('json =', payload)
+        r = requests.post(url=url_ukt, headers=headers, data=payload)
+        # r = requests.request('POST', url_ukt, headers=headers, data=payload)
+
+        if r.status_code == 201:
+            flash(message=f'Data beahsil di tambahkan', category='success')
+            return redirect(url_for('ukt.indexUkt'))
+        else:
+            return render_template('tambah-ukt.html', form=form)
+    return render_template('tambah-ukt.html', form=form)
 
 
 # get by id

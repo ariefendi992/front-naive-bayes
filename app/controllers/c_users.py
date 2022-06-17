@@ -29,23 +29,6 @@ def adminDashboard():
     return render_template('dashboard.html', ukt=ukt, user=user, user_login=user_login)
 
 
-# kategori Fakultas
-@admin.route('/kategori-fakultas', methods=['GET', 'POST'])
-def kategoriF():
-
-    return render_template('fakultas.html')
-
-
-# kategori jurusan
-@admin.route('/kategori-jurusan', methods=['GET', 'POST'])
-def kategoriJ():
-    url = base_url + '/kategori/jurusan'
-    req = requests.get(url).json()
-    response = req.get('data')
-
-    return render_template('jurusan.html', response=response)
-
-
 # User all data
 @admin.route('/users', methods=['GET', 'POST'])
 def userData():

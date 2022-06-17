@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% set filename = 'kat-jurusan' %}
 
+{% block title_page %}
+Kategori Jurusan
+{% endblock %}
+
 {% block css %}
 <!-- <link rel="stylesheet" href="../../static/vendors/jquery-datatables/jquery.dataTables.min.css"> -->
 <link rel="stylesheet"
@@ -19,16 +23,16 @@
 
 {% block content %}
 <div class="content-wrapper container">
-  <div class="page-heading">
+  <!-- <div class="page-heading">
     <h4>.::Kategori Jurusan::.</h4>
-  </div>
+  </div> -->
   <div class="page-content">
     <div class="row">
       <div class="col-12 col-md-6">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
-              <h5 class="card-title">Data Jurusan</h5>
+              <h5 class="card-title">Kategori Jurusan</h5>
               <table class="table" id="table1">
                 <thead>
                   <tr>

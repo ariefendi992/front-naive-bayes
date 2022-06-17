@@ -31,7 +31,8 @@
               <table class="table" id="table1">
                 <thead>
                   <tr>
-                    <th>No.</th>
+                    <!-- <th>No.</th> -->
+                    <th></th>
                     <th>NIM</th>
                     <th>Nama</th>
                     <th>E-mail</th>
@@ -43,7 +44,8 @@
                 <tbody>
                   {% for data in response.get('data') %}
                   <tr>
-                    <td>{{loop.index}}</td>
+                    <!-- <td>{{loop.index}}</td> -->
+                    <td></td>
                     <td>{{data.stambuk}}</td>
                     <td>{{data.nama}}</td>
                     <td>{{data.email}}</td>

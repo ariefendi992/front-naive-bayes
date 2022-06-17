@@ -34,11 +34,154 @@
             <div class="card-body">
               <div class="row">
                 <div id="form" class="col-md-7">
-                  <form action="{{url_for('ukt.prediksi')}}" method="post" class="form form-horizontal">
+                  <form method="post" class="form form-horizontal">
+                    {{ form.csrf_token }}
                     <div class="form-body">
                       <div class="row">
                         <h5 class="card-title">.:: Uji Data ::..</h5>
+                        
                         <div class="col-md-4">
+                          {{ form.idUser.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.idUser.errors %}
+                          {{ form.idUser(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.idUser.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.idUser.data %}
+                          {{ form.idUser(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.idUser(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+                
+                        <div class="col-md-4">
+                          {{ form.prodi.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.prodi.errors %}
+                          {{ form.prodi(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.prodi.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.prodi.data %}
+                          {{ form.prodi(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.prodi(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                          {{ form.sms.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.sms.errors %}
+                          {{ form.sms(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.sms.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.sms.data %}
+                          {{ form.sms(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.sms(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+                        
+                        <div class="col-md-4">
+                          {{ form.statusMhs.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.statusMhs.errors %}
+                          {{ form.statusMhs(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.statusMhs.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.statusMhs.data %}
+                          {{ form.statusMhs(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.statusMhs(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+                        
+                        <div class="col-md-4">
+                          {{ form.kip.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.kip.errors %}
+                          {{ form.kip(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.kip.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.kip.data %}
+                          {{ form.kip(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.kip(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+                        
+                        <div class="col-md-4">
+                          {{ form.penghasilan.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.penghasilan.errors %}
+                          {{ form.penghasilan(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.penghasilan.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.penghasilan.data %}
+                          {{ form.penghasilan(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.penghasilan(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                          {{ form.tanggungan.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.tanggungan.errors %}
+                          {{ form.tanggungan(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.tanggungan.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.tanggungan.data %}
+                          {{ form.tanggungan(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.tanggungan(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+                        
+                        <div class="col-md-4">
+                          {{ form.pkh.label }}
+                        </div>
+                        <div class="col-md-8 form-group">
+                          {% if form.pkh.errors %}
+                          {{ form.pkh(class="form-select form-select-sm is-invalid") }}
+                          {% for error in form.pkh.errors %}
+                          <div class="invalid-feedback">{{error}}</div>
+                          {% endfor %}
+                          {% elif form.pkh.data %}
+                          {{ form.pkh(class="form-select form-select-sm")}}
+                          <div class="valid-feedback"></div>
+                          {% else %}                            
+                          {{ form.pkh(class="form-select form-select-sm")}}
+                          {% endif %}
+                        </div>
+
+                        <div class="col-sm-12 d-flex justify-content-end">
+                          <button type="submit" class="btn btn-primary btn-sm me-1 mb-1 ">Hitung</button>
+                          <button type="reset" class="btn btn-light-secondary  btn-sm me-1 mb-1">Reset</button>
+                        </div>
+
+                        <!-- <div class="col-md-4">
                           <label>Nama</label>
                         </div>
                         <fieldset class="col-md-8 form-group">
@@ -127,12 +270,12 @@
                             <option value="terima">Terima</option>
                             <option value="tidak">Tidak</option>
                           </select>
-                        </fieldset>
+                        </fieldset> -->
 
-                        <div class="col-sm-12 d-flex justify-content-end">
+                        <!-- <div class="col-sm-12 d-flex justify-content-end">
                           <button type="submit" class="btn btn-primary btn-sm me-1 mb-1 ">Hitung</button>
                           <button type="reset" class="btn btn-light-secondary  btn-sm me-1 mb-1">Reset</button>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </form>

@@ -1,6 +1,6 @@
 import json
 from flask import Blueprint, flash, request, render_template, redirect, url_for
-from app.lib.forms.forms_ukt import FormAddUkt
+from app.lib.forms.forms_ukt import FormAddUkt, FormUjiData
 from app.url import base_url
 import requests
 
@@ -219,68 +219,172 @@ def ujiUkt():
     r_user = requests.get(url_user).json()
     resp_user = r_user.get('data')
 
+    select_idUser = [('', '..:: Pilih ::..')]
+    for i in resp_user:
+        select_idUser.append((i['id'], i['nama'] +' | '+ i['stambuk'] ))
+
+
     url_prodi = base_url+'/kategori/jurusan'
     r_prodi = requests.get(url_prodi).json()
     resp_prodi = r_prodi.get('data')
+
+    select_prodi = [('', '..:: Pilih ::..')]
+    for i in resp_prodi:
+        select_prodi.append((i['id'], i['jurusan']))
 
     url_sms = base_url+'/kategori/semester'
     r_sms = requests.get(url_sms).json()
     resp_sms = r_sms.get('data')
 
+    select_semester = [('', '..:: Pilih ::..')]
+    for i in resp_sms:
+        select_semester.append((i['id'], i['semester']))
+
+    select_status_mhs = [('', '..:: Pilih ::..'), ('aktif', 'Aktif'), ('cuti', 'Cuti')]
+    
+    select_kip = [('', '..:: Pilih ::..'), ('terima', 'Terima'), ('tidak', 'Tidak')]
+
     url_penghasilan = base_url + '/kategori/penghasilan'
     r_penghasilan = requests.get(url_penghasilan).json()
     resp_penghasilan = r_penghasilan['data']
 
-    return render_template('uji-data-ukt.html', resp_user=resp_user, resp_prodi=resp_prodi, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan)
+    select_penghasilan = [('', '..:: Pilih ::..')]
+    for i in resp_penghasilan:
+        select_penghasilan.append((i['id'], i['keterangan']))
+
+    url_tanggungan = base_url + '/kategori/tanggungan'
+    r_tanggungan = requests.get(url_tanggungan).json()
+    resp_tanggungan = r_tanggungan['data']
+
+    select_tanggungan = [('', '..:: Pilih ::..')]
+    for i in resp_tanggungan:
+        select_tanggungan.append((i['id'], i['tanggungan']))
+
+    select_pkh = [('', '..:: Pilih ::..'), ('terima', 'Terima'), ('tidak', 'Tidak')]
+    
+
+    form = FormUjiData()
+    form.idUser.choices = select_idUser
+    form.prodi.choices = select_prodi
+    form.sms.choices = select_semester
+    form.statusMhs.choices = select_status_mhs
+    form.kip.choices = select_kip
+    form.penghasilan.choices = select_penghasilan
+    form.tanggungan.choices = select_tanggungan
+    form.pkh.choices = select_pkh
+
+    if form.validate_on_submit():
+        
+        # Request data
+        id_user = form.idUser.data
+        prodi = form.prodi.data
+        sms = form.sms.data
+        status_mhs = form.statusMhs.data
+        kip = form.kip.data
+        penghasilan = form.penghasilan.data
+        tanggungan = form.tanggungan.data
+        pkh = form.pkh.data
+
+        # url manipulasi
+        # url_prodi = base_url + '/kategori/jurusan'
+        # r_prodi = requests.get(url_prodi).json()
+        # resp_prodi = r_prodi['data']
+
+        # url_sms = base_url+'/kategori/semester'
+        # r_sms = requests.get(url_sms).json()
+        # resp_sms = r_sms.get('data')
+
+        # # url_penghasilan = base_url + '/kategori/penghasilan'
+        # # r_penghasilan = requests.get(url_penghasilan).json()
+        # # resp_penghasilan = r_penghasilan['data']
+
+        
+
+        # to json
+        headers = {
+            'Content-Type': 'application/json'
+        }
+
+        payload = json.dumps({
+            "id_user" : id_user,
+            "id_prodi": int(prodi),
+            "id_semester": int(sms),
+            "status_mhs": status_mhs,
+            "kip_bm": kip,
+            "id_penghasilan": int(penghasilan),
+            "id_tanggungan": tanggungan,
+            "pkh_kks": pkh
+        })
+        url = base_url + '/beasiswa-ukt/uji-data'
+
+        r = requests.post(url, headers=headers, data=payload).json()
+
+
+        response = r
+        pay = json.loads(payload)
+
+        print(response)
+
+        print('pay == ', pay)
+
+        return render_template('hasil-uji.html', response=response, resp_prodi=resp_prodi, pay=pay, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan, resp_tanggungan=resp_tanggungan)
+
+    return render_template('uji-data-ukt.html', form=form)
+    # return render_template('uji-data-ukt.html', form=form, resp_user=resp_user, resp_prodi=resp_prodi, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan)
 
 
 # hitung data uji
 @ukt.route('/hasil-hitung', methods=['POST', 'GET'])
 def prediksi():
-    # Request data
-    id_user = request.form.get('id_user')
-    prodi = request.form.get('prodi')
-    sms = request.form.get('semester')
-    status_mhs = request.form.get('status_mhs')
-    kip = request.form.get('kip')
-    penghasilan = request.form.get('penghasilan_orang_tua')
-    tanggungan = request.form.get('tanggungan')
-    pkh = request.form.get('pkh')
 
-    # url manipulasi
-    url_prodi = base_url + '/kategori/jurusan'
-    r_prodi = requests.get(url_prodi).json()
-    resp_prodi = r_prodi['data']
+    form = FormUjiData()
+    if form.validate_on_submit():
+        
+        # Request data
+        id_user = form.idUser.data
+        prodi = form.prodi.data
+        sms = form.sms.data
+        status_mhs = form.statusMhs.data
+        kip = form.kip.data
+        penghasilan = form.penghasilan.data
+        tanggungan = form.tanggungan.data
+        pkh = form.pkh.data
 
-    url_sms = base_url+'/kategori/semester'
-    r_sms = requests.get(url_sms).json()
-    resp_sms = r_sms.get('data')
+        # url manipulasi
+        url_prodi = base_url + '/kategori/jurusan'
+        r_prodi = requests.get(url_prodi).json()
+        resp_prodi = r_prodi['data']
 
-    url_penghasilan = base_url + '/kategori/penghasilan'
-    r_penghasilan = requests.get(url_penghasilan).json()
-    resp_penghasilan = r_penghasilan['data']
+        url_sms = base_url+'/kategori/semester'
+        r_sms = requests.get(url_sms).json()
+        resp_sms = r_sms.get('data')
 
-    # to json
-    headers = {
-        'Content-Type': 'application/json'
-    }
+        url_penghasilan = base_url + '/kategori/penghasilan'
+        r_penghasilan = requests.get(url_penghasilan).json()
+        resp_penghasilan = r_penghasilan['data']
 
-    payload = json.dumps({
-        "id_prodi": int(prodi),
-        "id_semester": int(sms),
-        "status_mhs": status_mhs,
-        "kip_bm": kip,
-        "id_penghasilan": int(penghasilan),
-        "tanggungan": tanggungan,
-        "pkh_kks": pkh
-    })
-    url = base_url + '/beasiswa-ukt/uji-data'
+        # to json
+        headers = {
+            'Content-Type': 'application/json'
+        }
 
-    r = requests.post(url, headers=headers, data=payload).json()
+        payload = json.dumps({
+            "id_user" : id_user,
+            "id_prodi": int(prodi),
+            "id_semester": int(sms),
+            "status_mhs": status_mhs,
+            "kip_bm": kip,
+            "id_penghasilan": int(penghasilan),
+            "id_tanggungan": tanggungan,
+            "pkh_kks": pkh
+        })
+        url = base_url + '/beasiswa-ukt/uji-data'
 
-    response = r
-    pay = json.loads(payload)
+        r = requests.post(url, headers=headers, data=payload).json()
 
-    print(response)
+        response = r
+        pay = json.loads(payload)
 
-    return render_template('hasil-uji.html', response=response, resp_prodi=resp_prodi, pay=pay, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan)
+        print(response)
+
+        return render_template('hasil-uji.html', form=form, response=response, resp_prodi=resp_prodi, pay=pay, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan)

@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% set filename = 'hasil-uji' %}
-
+{% block title_page %}
+Hasil Uji
+{% endblock %}
 {% block css %}
 <link rel="stylesheet"
   href="{{ url_for('static', filename='vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css') }}">
@@ -34,17 +36,15 @@
                       <thead class="table-dark">
                         <tr>
                           <th>Jumlah data</th>
-                          <th>Kelas PC1(Layak)</th>
-                          <th>Kelas PC0(Tidak Layak)</th>
+                          <th>Layak</th>
+                          <th>Tidak Layak</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          {% for data in response['data'] %}
-                          <td>{{data.total_data.total_data}}</td>
-                          <td>{{data.total_data.layak}}</td>
-                          <td>{{data.total_data.tidak_layak}}</td>
-                          {% endfor %}
+                        <tr>                          
+                          <td>{{response.total_data}}</td>
+                          <td>{{response.total_layak}}</td>
+                          <td>{{response.total_tidak}}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -54,21 +54,19 @@
 
               <div class="row pt-3">
                 <div class="col-md-6">
-                  <h6 class="card-subtitle">----Probabilitas Prior----</h6>
+                  <h6 class="card-subtitle">----Probabilitas Kelas----</h6>
                   <div class="table-responsive-sm">
                     <table class="table table-bordered border-secondary border border-2">
                       <thead class="table-dark">
                         <tr>
-                          <th>Kelas PC1(Layak)</th>
-                          <th>Kelas PC0(Tidak Layak)</th>
+                          <th>Kelas P(Layak)</th>
+                          <th>Kelas P(Tidak Layak)</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          {% for data in response['data'] %}
-                          <td>{{data.p_class.layak}}</td>
-                          <td>{{data.p_class.tidak_layak}}</td>
-                          {% endfor %}
+                        <tr>                          
+                          <td>{{response.prob_keputusan_layak}}</td>
+                          <td>{{response.prob_keputusan_tidak}}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -78,7 +76,7 @@
 
               <div class="row pt-3">
                 <div class="col-md-10">
-                  <h6 class="card-subtitle">----Probabilitas Data Uji----</h6>
+                  <h6 class="card-subtitle">----Probabilitas Kategori----</h6>
                   <div class="table-responsive-sm">
                     <table class="table table-bordered border-secondary border border-2">
                       <thead class="table-dark">
@@ -91,7 +89,7 @@
                       <thead class="table-dark">
                         <tr>
                           <th colspan="2">Atribut</th>
-                          <th>Nilai</th>
+                          <th>Kategori</th>
                           <th>Layak</th>
                           <th>Tidak Layak</th>
                         </tr>
@@ -106,12 +104,9 @@
                             {{prodi.jurusan}}
                             {% endif %}
                             {% endfor %}
-                          </td>
-                          {% for data in response['data'] %}
-                          <td>{{ data.atr_prodi.layak}}</td>
-                          <td>{{ data.atr_prodi.tidak_layak}}</td>
-                          {% endfor %}
-                          </the>
+                          </td>                         
+                          <td>{{ response.layak.p_prodi_layak }}</td>
+                          <td>{{ response.tidak.p_prodi_tidak }}</td>                      
                         </tr>
                         <tr>
                           <td>Semester</td>
@@ -123,29 +118,22 @@
                             {% endif %}
                             {% endfor %}
                           </td>
-                          {% for data in response['data'] %}
-                          <td>{{ data.atr_semester.layak}}</td>
-                          <td>{{ data.atr_semester.tidak_layak}}</td>
-                          {% endfor %}
-
+                          <td>{{ response.layak.p_sms_layak }}</td>
+                          <td>{{ response.tidak.p_sms_tidak }}</td>
                         </tr>
                         <tr>
                           <td>Status Mahasiswa</td>
                           <td>:</td>
                           <td>{{ pay.status_mhs | capitalize }}</td>
-                          {% for data in response['data'] %}
-                          <td>{{ data.atr_status_mhs.layak}}</td>
-                          <td>{{ data.atr_status_mhs.tidak_layak}}</td>
-                          {% endfor %}
+                          <td>{{ response.layak.p_status_mhs_layak }}</td>
+                          <td>{{ response.tidak.p_status_mhs_tidak }}</td>
                         </tr>
                         <tr>
                           <td>Penerima KIP</td>
                           <td>:</td>
                           <td>{{ pay.kip_bm | capitalize }}</td>
-                          {% for data in response['data'] %}
-                          <td>{{ data.atr_penerima_kip.layak}}</td>
-                          <td>{{ data.atr_penerima_kip.tidak_layak}}</td>
-                          {% endfor %}
+                          <td>{{ response.layak.p_kip_layak }}</td>
+                          <td>{{ response.tidak.p_kip_tidak }}</td>
                         </tr>
                         <tr>
                           <td>Penghasilan Orang Tua</td>
@@ -157,28 +145,28 @@
                             {% endif %}
                             {% endfor %}
                           </td>
-                          {% for data in response['data'] %}
-                          <td>{{ data.atr_penghasilan_orang_tua.layak}}</td>
-                          <td>{{ data.atr_penghasilan_orang_tua.tidak_layak}}</td>
-                          {% endfor %}
+                          <td>{{ response.layak.p_penghasilan_layak }}</td>
+                          <td>{{ response.tidak.p_penghasilan_tidak }}</td>
                         </tr>
                         <tr>
                           <td>Jumlah Tanggungan</td>
                           <td>:</td>
-                          <td>{{ pay.tanggungan}}</td>
-                          {% for data in response['data'] %}
-                          <td>{{ data.atr_jml_tanggungan.layak}}</td>
-                          <td>{{ data.atr_jml_tanggungan.tidak_layak}}</td>
-                          {% endfor %}
+                          <td> 
+                            {% for jt in resp_tanggungan %}
+                            {% if jt.id == pay.id_penghasilan %}
+                            {{ jt.tanggungan}}
+                            {% endif %}
+                            {% endfor %}
+                          </td>
+                          <td>{{ response.layak.p_tanggungan_layak }}</td>
+                          <td>{{ response.tidak.p_tanggungan_tidak }}</td>
                         </tr>
                         <tr>
                           <td>Penerma PKH/KKS</td>
                           <td>:</td>
                           <td>{{ pay.pkh_kks | capitalize}}</td>
-                          {% for data in response['data'] %}
-                          <td>{{ data.atr_status_pkh.layak}}</td>
-                          <td>{{ data.atr_status_pkh.tidak_layak}}</td>
-                          {% endfor %}
+                          <td>{{ response.layak.p_pkh_layak }}</td>
+                          <td>{{ response.tidak.p_pkh_tidak }}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -202,44 +190,34 @@
                           <td>P|C1 (Layak)</td>
                           <td class="text-center">:</td>
                           <td>
-                            {% for data in response['data'] %}
-                            {{data.p_class.layak}} x
-                            {{ data.atr_prodi.layak}} x
-                            {{ data.atr_semester.layak}} x
-                            {{ data.atr_status_mhs.layak}} x
-                            {{ data.atr_penerima_kip.layak}} x
-                            {{ data.atr_penghasilan_orang_tua.layak}} x
-                            {{ data.atr_jml_tanggungan.layak}} x
-                            {{ data.atr_status_pkh.layak}}
-                            {% endfor %}
+                            {{ response.layak.p_prodi_layak}} x
+                            {{ response.layak.p_sms_layak}} x
+                            {{ response.layak.p_status_mhs_layak}} x
+                            {{ response.layak.p_kip_layak}} x
+                            {{ response.layak.p_penghasilan_layak}} x
+                            {{ response.layak.p_tanggungan_layak}} x
+                            {{ response.layak.p_pkh_layak }}                            
                           </td>
                           <td class="text-center">=</td>
-                          <td>
-                            {% for data in response['data'] %}
-                            {{ data.probabilitas.layak}}
-                            {%endfor%}
+                          <td>                            
+                            {{ response.p_x_kep_layak }}                           
                           </td>
                         </tr>
                         <tr>
                           <td>P|C0 (Tidak Layak)</td>
                           <td class="text-center">:</td>
                           <td>
-                            {% for data in response['data'] %}
-                            {{data.p_class.tidak_layak}} x
-                            {{ data.atr_prodi.tidak_layak}} x
-                            {{ data.atr_semester.tidak_layak}} x
-                            {{ data.atr_status_mhs.tidak_layak}} x
-                            {{ data.atr_penerima_kip.tidak_layak}} x
-                            {{ data.atr_penghasilan_orang_tua.tidak_layak}} x
-                            {{ data.atr_jml_tanggungan.tidak_layak}} x
-                            {{ data.atr_status_pkh.tidak_layak}}
-                            {% endfor %}
+                            {{ response.tidak.p_prodi_tidak}} x
+                            {{ response.tidak.p_sms_tidak}} x
+                            {{ response.tidak.p_status_mhs_tidak}} x
+                            {{ response.tidak.p_kip_tidak}} x
+                            {{ response.tidak.p_penghasilan_tidak}} x
+                            {{ response.tidak.p_tanggungan_tidak}} x
+                            {{ response.tidak.p_pkh_tidak }} 
                           </td>
                           <td class="text-center">=</td>
                           <td>
-                            {% for data in response['data'] %}
-                            {{ data.probabilitas.tidak_layak}}
-                            {%endfor%}
+                            {{ response.p_x_kep_tidak }}
                           </td>
                         </tr>
                       </tbody>
@@ -250,8 +228,10 @@
               </div>
               <div class="row pt-2">
                 <p class="card-text">
-                  Berdasarkan hasil perhitungan, dapat disimpulkan bahwa data uji tersebut
-                  <b><u>{{response.kesimpulan| upper}}</u></b> untuk mendapatkan bantuan beasiswa Uang Kuliah Tunggal.
+                  Berdasarkan hasil uji, dapat disimpulkan bahwa data tersebut
+                  <b><u>{{response.keputusan| upper}}</u></b> untuk mendapatkan bantuan beasiswa. <br>
+                  Persentase Layak&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : {{response.persen_layak}} % <br>
+                  Persentase Tidak Layak &nbsp; :  {{response.persen_tidak}} % <br>
                 </p>
               </div>
             </div>

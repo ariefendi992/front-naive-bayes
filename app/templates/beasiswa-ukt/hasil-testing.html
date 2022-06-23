@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% set filename = 'get-ukt' %}
+{% set filename = 'hasil-testing' %}
 {% block title_page %}
-Data Trainig
+Data Hasil Testing
 {% endblock %}
 
 {% block css %}
@@ -31,9 +31,10 @@ Data Trainig
           <div class="card-content">
             <div class="card-body">
               {# <h5 class="card-title">Data Penerima UKT</h5> #}
-              <a href=" {{url_for('ukt.tambahDataUkt')}} " class="btn btn-primary btn-sm">+ Tambah Data +</a>
-              <a href=" {{url_for('ukt.ujiUkt')}} " class="btn btn-success btn-sm">+ Uji Data +</a>
+              {#<a href=" {{url_for('ukt.tambahDataUkt')}} " class="btn btn-primary btn-sm">+ Tambah Data +</a>
+              <a href=" {{url_for('ukt.ujiUkt')}} " class="btn btn-success btn-sm">+ Uji Data +</a>#}
               {# <hr> #}
+              <h5 class="card-title">Riwayat Hasil Testing Data</h5>
               <div class="table-responsive-sm">
                 <table class="table">
                   <thead>
@@ -83,7 +84,7 @@ Data Trainig
                     {% endfor %}
                   </tbody>
                 </table>
-                <nav aria-label="Page navigation example">
+                {#<nav aria-label="Page navigation example">
                   <ul class="pagination pagination-primary pagination-sm justify-content-end">
                     {% if response['meta']['has_prev'] %}
                     <li class="page-item">
@@ -114,7 +115,7 @@ Data Trainig
                     </li>
                     {% endif %}
                   </ul>
-                </nav>
+                </nav> #}
               </div>
             </div>
           </div>

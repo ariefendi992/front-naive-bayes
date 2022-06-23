@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% set filename = 'user-add' %}
 
+{% block title_page %}
+Tambah User
+{% endblock %}
+
 {% block css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='vendors/choices.js/choices.min.css') }}" />
 <link rel="stylesheet"

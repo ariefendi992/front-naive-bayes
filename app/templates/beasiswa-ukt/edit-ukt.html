@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% set filename = 'ukt-edit' %}
 
+{% block title_page %}
+Edit Data Pendaftar
+{% endblock %}
+
 {% block css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='vendors/choices.js/choices.min.css') }}" />
 <link rel="stylesheet"
@@ -41,7 +45,7 @@
                     class="form form-horizontal">
                     <div class="form-body">
                       <div class="row">
-                        <h5 class="card-title">Edit Data Pendaftar Beasiswa UKT</h5>
+                        <h5 class="card-title">Edit Data Pendaftar</h5>
                         <div class="col-md-4">
                           <label>Nama</label>
                         </div>

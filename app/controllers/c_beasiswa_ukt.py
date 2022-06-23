@@ -17,7 +17,7 @@ def indexUkt():
 
         if req.status_code == 200:
             response = req.json()
-            return render_template('get-ukt.html', response=response)
+            return render_template('get-ukt.html', admin=session, response=response)
         else:
             return req.json().get('msg')
     else:
@@ -127,8 +127,8 @@ def tambahDataUkt():
                 flash(message=f'Data beahsil di tambahkan', category='success')
                 return redirect(url_for('ukt.indexUkt'))
             else:
-                return render_template('tambah-ukt.html', form=form)
-        return render_template('tambah-ukt.html', form=form)
+                return render_template('tambah-ukt.html', admin=session, form=form)
+        return render_template('tambah-ukt.html',admin=session, form=form)
 
     else:
         return redirect(url_for('auth.login'))
@@ -164,7 +164,7 @@ def getByIdUkt():
         r_penghasilan = requests.get(url_penghasilan).json()
         resp_penghasilan = r_penghasilan['data']
 
-        return render_template('edit-ukt.html', resp_ukt=resp_ukt, resp_user=resp_user, resp_prodi=resp_prodi, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan)
+        return render_template('edit-ukt.html', admin=session, resp_ukt=resp_ukt, resp_user=resp_user, resp_prodi=resp_prodi, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan)
 
     else:
         return redirect(url_for('auth.login'))
@@ -350,9 +350,9 @@ def ujiUkt():
 
             print('pay == ', pay)
 
-            return render_template('hasil-uji.html', response=response, resp_prodi=resp_prodi, pay=pay, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan, resp_tanggungan=resp_tanggungan)
+            return render_template('hasil-uji.html', admin=session, response=response, resp_prodi=resp_prodi, pay=pay, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan, resp_tanggungan=resp_tanggungan)
 
-        return render_template('uji-data-ukt.html', form=form)
+        return render_template('uji-data-ukt.html', admin=session, form=form)
         # return render_template('uji-data-ukt.html', form=form, resp_user=resp_user, resp_prodi=resp_prodi, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan)
     else:
         return redirect(url_for('auth.login'))
@@ -414,7 +414,22 @@ def prediksi():
 
             print(response)
 
-            return render_template('hasil-uji.html', form=form, response=response, resp_prodi=resp_prodi, pay=pay, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan)
+            return render_template('hasil-uji.html', admin=session, form=form, response=response, resp_prodi=resp_prodi, pay=pay, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan)
 
+    else:
+        return redirect(url_for('auth.login'))
+
+
+@ukt.route('/hasil-testing')
+def hasil_testing():
+    if 'admin' in session:
+        url = base_url+'/beasiswa-ukt/hasil-data-testing'
+        req = requests.get(url)
+
+        if req.status_code == 200:
+            response = req.json()
+            return render_template('hasil-testing.html', admin=session, response=response)
+        else:
+            return req.json().get('msg')
     else:
         return redirect(url_for('auth.login'))

@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% set filename = 'uji-ukt' %}
 
+{% block title_page %}
+Data Testing
+{% endblock %}
+
 {% block css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='vendors/choices.js/choices.min.css') }}" />
 <link rel="stylesheet"
@@ -38,7 +42,7 @@
                     {{ form.csrf_token }}
                     <div class="form-body">
                       <div class="row">
-                        <h5 class="card-title">.:: Uji Data ::..</h5>
+                        <h5 class="card-title">Form Data Testing</h5>
                         
                         <div class="col-md-4">
                           {{ form.idUser.label }}

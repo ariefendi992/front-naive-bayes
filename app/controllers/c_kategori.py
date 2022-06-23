@@ -11,7 +11,7 @@ def kategoriS():
         url = base_url + '/kategori/semester'
         req = requests.get(url).json()
         response = req.get('data')
-        return render_template('semester.html', response=response)
+        return render_template('semester.html', admin=session, response=response)
     else:
         return redirect(url_for('auth.login'))
 
@@ -23,7 +23,7 @@ def kategoriJ():
         url = base_url + '/kategori/jurusan'
         req = requests.get(url).json()
         response = req.get('data')
-        return render_template('jurusan.html', response=response)
+        return render_template('jurusan.html', admin=session, response=response)
     else:
         return redirect(url_for('auth.login'))
 
@@ -35,7 +35,7 @@ def kategoriPenghasilan():
         url = base_url + '/kategori/penghasilan'
         req = requests.get(url).json()
         response = req.get('data')
-        return render_template('penghasilan.html', response=response)
+        return render_template('penghasilan.html', admin=session, response=response)
     else:
         return redirect(url_for('auth.login'))
 
@@ -47,7 +47,7 @@ def kategoriTanggungan():
         url = base_url + '/kategori/tanggungan'
         req = requests.get(url).json()
         response = req.get('data')
-        return render_template('tanggungan.html', response=response)
+        return render_template('tanggungan.html', admin=session, response=response)
     else:
         return redirect(url_for('auth.login'))
 

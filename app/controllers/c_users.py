@@ -26,10 +26,11 @@ def adminDashboard():
         print(ukt)
         user = data[0].get('total_user')
         user_login = data[0].get('total_user_login')
+        data_uji = data[0].get('total_data_uji')
 
         print('session ==', session )
 
-        return render_template('dashboard.html', admin=session, ukt=ukt, user=user, user_login=user_login)
+        return render_template('dashboard.html', admin=session, ukt=ukt, user=user, user_login=user_login, data_uji=data_uji)
     else:
         return redirect(url_for('auth.login'))
 
@@ -60,7 +61,7 @@ def userLogin():
         r = requests.get(url).json()
         resp = r.get('data')
 
-        return render_template('user-login.html', response=resp)
+        return render_template('user-login.html', admin=session, response=resp)
     else:
         return redirect(url_for('auth.login'))
 
@@ -108,7 +109,7 @@ def userAdd():
             else:
                 return render_template('user-add.html', form=form, prodi=response)
 
-        return render_template('user-add.html', form=form)
+        return render_template('user-add.html', admin=session, form=form)
     else:
         return redirect(url_for('auth.login'))
 
@@ -125,7 +126,7 @@ def userById():
 
         resp = r.json()
 
-        return render_template('user-edit.html', response=resp)
+        return render_template('user-edit.html',admin=session, response=resp)
     else:
         return redirect(url_for('auth.login'))
 

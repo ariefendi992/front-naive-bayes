@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Halaman | Login {% block title %} {% endblock %}</title>
+    {% block stylesfirst %}{% endblock %}
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bootstrap.css') }}"
+    />
+    {% block styles %}{% endblock %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendors/perfect-scrollbar/perfect-scrollbar.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendors/bootstrap-icons/bootstrap-icons.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/app.css') }}"
+    />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='images/logo/uim.png') }}"
+      type="image/x-icon"
+    />
+  </head>
+
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+    
+    body.my-login-page {
+      /* background-color: #f1f1f1; */
+      background-image: url(../../static/images/bg.png);
+      /* height: 100%; */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-color: rgba(95, 86, 100, 0.868);
+      background-blend-mode: overlay;
+
+      font-size: 14px;
+    }
+
+    .my-login-page .brand {
+      width: 100%;
+      /* height: 100%; */
+      text-align: center;
+      overflow: hidden;
+      border-radius: 0%;
+      margin: 48px auto 0px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .my-login-page .brand img {
+      margin-top: 15%;
+      margin-bottom: 5%;
+      width: 100%;
+    }
+
+    .my-login-page .card-wrapper {
+      width: 400px;
+    }
+
+    .my-login-page .card {
+      border-color: transparent;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .my-login-page .card.fat {
+      padding: 10px;
+    }
+
+    .my-login-page .card .card-title {
+      margin-bottom: 30px;
+    }
+
+    .my-login-page .form-control {
+      border-width: 2.3px;
+    }
+
+    .my-login-page .form-group label {
+      width: 100%;
+    }
+
+    .my-login-page .btn.btn-block {
+      padding: 12px 10px;
+    }
+
+    .my-login-page .footer {
+      margin: 40px 0;
+      color: #888;
+      text-align: center;
+      
+    }
+
+    @media screen and (max-width: 425px) {
+      .my-login-page .card-wrapper {
+        width: 90%;
+        margin: 0 auto;
+      }
+    }
+
+    @media screen and (max-width: 320px) {
+      .my-login-page .card.fat {
+        padding: 0;
+      }
+
+      .my-login-page .card.fat .card-body {
+        padding: 15px;
+      }
+    }
+  </style>
+
+  <body class="my-login-page">
+    <section class="h-100">
+      <div class="container h-100">
+        <div class="row justify-content-md-center">
+          <div class="card-wrapper">
+            <div class="brand mt-1">
+              <img src="{{ url_for('static', filename='images/logo/uim.png') }}" alt="logo" style="height: 140px; width: 140px" />
+              <h3 class="auth-title text-white">FAKULTAS TEKNIK UIM</h3>
+            </div>
+            <div class="card mt-2">
+              <div class="card-body">
+                <h4 class="auth-title mb-3">Login</h4>
+                {% with messages = get_flashed_messages(with_categories = true ) %} {% if messages %}
+                {% for category, message in messages %}
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div id="basic" class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                      {{message}}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %} {% endif %} {% endwith %}
+                <form action="" method="post">
+                  {{ form.csrf_token }}
+                  <div class="form-group position-relative mb-4">
+                    {% if form.username.errors %}
+                    {{ form.username(class="form-control form-control is-invalid", placeholder="Username")}}
+                    {% for error in form.username.errors %}
+                    <div class="invalid-feedback">{{error}}</div>
+                    {% endfor %}
+                    {% elif form.username.data %}
+                    {{ form.username(class="form-control form-control", placeholder="Username")}}
+                    <div class="valid-feedback"></div>
+                    {% else %}
+                    {{ form.username(class="form-control form-control", placeholder="Username")}}
+                    {% endif %}
+                    <!-- <div class="form-control-icon">
+                      <i class="bi bi-person"></i>
+                    </div> -->
+                  </div>
+                  <div class="form-group position-relative mb-3">
+                    {% if form.password.errors %}
+                    {{ form.password(class="form-control form-control is-invalid", placeholder="Password")}}
+                    {% for error in form.password.errors %}
+                    <div class="invalid-feedback">{{error}}</div>
+                    {% endfor %}
+                    {% elif form.password.data %}
+                    {{ form.password(class="form-control form-control", placeholder="Password")}}
+                    <div class="valid-feedback"></div>
+                    {% else %}
+                    {{ form.password(class="form-control form-control", placeholder="Password")}}
+                    {% endif %}
+                    <!-- <div class="form-control-icon">
+                      <i class="bi bi-shield-lock"></i>
+                    </div> -->
+                  </div>
+                  <div class="form-group position-relative mb-3">
+                    {% if form.status.errors %}
+                    {{ form.status(class="form form-select is-invalid")}}
+                    {% for error in form.status.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% elif form.status.data %}
+                    {{ form.status(class="form-select form-select")}}
+                    <div class="valid-feedback"></div>
+                    {% else %}
+                    {{ form.status(class="form-select form-select")}}
+                    {% endif %}
+                    <!-- <div class="form-control-icon">
+                      <i class="bi bi-person"></i>
+                    </div> -->
+                  </div>
+
+                  <!-- <div class="form-group position-relative mb-2">
+                                  {#{ form.role(class="form-select")}#}
+                                  <div class="form-control-icon">
+                                      <i class="bi bi-user"></i>
+                                  </div>
+                              </div> -->
+                  
+                    <button class="btn btn-primary btn-block btn-lg shadow-lg mt-3">Masuk</button>
+                </form>
+                <!-- <div class="text-center mb-0 mt-3 text-sm fs-6">
+                  <p class="text-gray-600">Belum punya akun? <a href="#" class="font-bold">Daftar</a>.</p>
+                </div> -->
+                <!-- <div class="text-center mt-0 text-sm fs-6">
+                  <p><a class="font-bold" href="forgot-password.html">Lupa password?</a>.</p>
+                </div> -->
+              </div>
+            </div>
+            <div class="footer">
+              <!-- Copyright &copy; 2017 &mdash; Your Company -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script src="{{ url_for('static', filename='vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  {#}
+  <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+  {##} {% block js %}{% endblock %}
+
+  <script src="{{ url_for('static', filename='js/mazer.js') }}"></script>
+</html>

@@ -16,7 +16,7 @@ class FormLogin(FlaskForm):
         if len(field.data) == 0:
             raise ValidationError('** Password ')
         if len(field.data) < 6:
-            raise ValidationError('** Password minal 6 digit')
+            raise ValidationError('** Password minimal 6 digit')
 
     def validate_status(self, field):
         if len(field.data) == 0:

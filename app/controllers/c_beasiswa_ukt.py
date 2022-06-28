@@ -124,7 +124,7 @@ def tambahDataUkt():
             # r = requests.request('POST', url_ukt, headers=headers, data=payload)
 
             if r.status_code == 201:
-                flash(message=f'Data beahsil di tambahkan', category='success')
+                flash(message=f'Data berhasil di tambahkan', category='success')
                 return redirect(url_for('ukt.indexUkt'))
             else:
                 return render_template('tambah-ukt.html', admin=session, form=form)
@@ -225,6 +225,7 @@ def deleteUkt():
         r = requests.delete(url + f'?id={id}')
 
         if r.status_code == 204:
+            flash(message='Data berhasil di hapus.', category='danger')
             return redirect(url_for('ukt.indexUkt'))
         else:
             return redirect(url_for('ukt.indexUkt'))

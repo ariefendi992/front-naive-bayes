@@ -9,7 +9,8 @@ auth = Blueprint('auth', __name__, template_folder='../templates/auth/')
 @auth.route('/login', methods=['POST','GET'])
 def login():
 
-    select_status = [('','..:: Pilih ::..'), ('admin','Admin'), ('user', 'User')]
+    # select_status = [('','..:: Pilih ::..'), ('admin','Admin'), ('user', 'User')]
+    select_status = [('','..:: Pilih ::..'), ('admin','Admin')]
 
 
     form = FormLogin()

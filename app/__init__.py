@@ -7,16 +7,9 @@ from app.registers import registerApp, registerLib
 def createApp():
     app = Flask(__name__)
     app.config.from_object(Config)
-    app.permanent_session_lifetime = timedelta(minutes=5)
-
-
+    app.permanent_session_lifetime = timedelta(minutes=100)
     registerApp(app)
     registerLib(app)
-
-
-    
-
     return app
-
 
 app = createApp()

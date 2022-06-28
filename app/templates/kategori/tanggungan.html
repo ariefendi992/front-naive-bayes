@@ -32,7 +32,9 @@ Kategori Tanggungan
         <div class="card">
           <div class="card-content">
             <div class="card-body">
-              <h5 class="card-title">Kategori Jumlah Tanggungan</h5>
+              <!-- <h5 class="card-title">Kategori Jumlah Tanggungan</h5> -->
+              <a href="{{url_for('kategori.add_tanggungan')}}" class="btn btn-primary btn-sm mb-1">+ Tambah Data +</a>
+
               <table class="table" id="table1">
                 <thead>
                   <tr>
@@ -47,15 +49,13 @@ Kategori Tanggungan
                     <td>{{loop.index}}</td>
                     <td>{{data.tanggungan}}</td>
                     <td>
-                      <a href="" class="btn btn-sm btn-outline-warning">
-                        <i class="fa fa-pen"></i>
-                      </a>
-
-                      <a href="" class="btn btn-sm btn-outline-danger">
-                        <i class="fa fa-trash"></i>
-                      </a>
+                      <a href="" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-placement="top"
+                      title="Hapus Data {{ data.tanggungan }} " data-bs-target="#hapusModal{{data.id}}">
+                      <i class="fa fa-trash"></i>
+                    </a>
                     </td>
                   </tr>
+                  {% include 'modal/modal-delete-tanggungan.html' %}
                   {% endfor %}
                 </tbody>
               </table>

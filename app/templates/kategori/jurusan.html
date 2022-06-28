@@ -32,7 +32,8 @@ Kategori Jurusan
         <div class="card">
           <div class="card-content">
             <div class="card-body">
-              <h5 class="card-title">Kategori Jurusan</h5>
+              <!-- <h5 class="card-title">Kategori Jurusan</h5> -->
+              <a href="{{url_for('kategori.add_prodi')}}" class="btn btn-primary btn-sm mb-1">+ Tambah Data +</a>
               <table class="table" id="table1">
                 <thead>
                   <tr>
@@ -47,15 +48,17 @@ Kategori Jurusan
                     <td>{{loop.index}}</td>
                     <td>{{data.jurusan}}</td>
                     <td>
-                      <a href="" class="btn btn-sm btn-outline-warning">
+                      <!-- <a href="" class="btn btn-sm btn-outline-warning">
                         <i class="fa fa-pen"></i>
-                      </a>
+                      </a> -->
 
-                      <a href="" class="btn btn-sm btn-outline-danger">
+                      <a href="" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-placement="top"
+                        title="Hapus Data {{ data.jurusan }} " data-bs-target="#hapusModal{{data.id}}">
                         <i class="fa fa-trash"></i>
                       </a>
                     </td>
                   </tr>
+                  {% include "modal/modal-delete-prodi.html" %}
                   {% endfor %}
                 </tbody>
               </table>

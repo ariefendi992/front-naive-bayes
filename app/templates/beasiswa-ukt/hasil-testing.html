@@ -48,7 +48,7 @@ Data Hasil Testing
                       <th>Tanggungan</th>
                       <th>PKH</th>
                       <th>Kelayakan</th>
-                      <th class="text-center">Aksi</th>
+                      <!-- <th class="text-center">Aksi</th> -->
                     </tr>
                   </thead>
                   <tbody>
@@ -63,7 +63,7 @@ Data Hasil Testing
                       <td class="text-center">{{ data.jml_tanggungan }}</td>
                       <td>{{ data.pkh | capitalize }}</td>
                       <td>{{ data.keputusan | capitalize }}</td>
-                      <td>
+                      <!-- <td>
                         <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-placement="top"
                           title="Detail Data {{ data.nama }}" data-bs-target="#modal-detaill{{data.id}}">
                           <i class="fa fa-eye"></i>
@@ -77,7 +77,7 @@ Data Hasil Testing
                           title="Hapus Data {{ data.nama }}" data-bs-target="#hapusModal{{data.id}}">
                           <i class="fa fa-trash"></i>
                         </a>#}
-                      </td>
+                      </td> -->
                     </tr>
                     {% include "modal/modal-delete-ukt.html" %}
                     {% include "modal/modal-detail-ukt.html" %}

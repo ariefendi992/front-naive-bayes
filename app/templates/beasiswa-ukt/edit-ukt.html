@@ -135,10 +135,16 @@ Edit Data Pendaftar
                         <div class="col-md-4">
                           <label>Jumlah Tanggungan</label>
                         </div>
-                        <div class="col-md-8 form-group">
-                          <input type="number" id="nik-id" class="form-control form-control-sm" name="tanggungan"
-                            placeholder="Tanggungan Orang Tua" value="{{ resp_ukt.tanggungan}}">
-                        </div>
+                        <fieldset class="col-md-8 form-group">
+                          <select class="form-select form-select-sm" name="tanggungan">
+                            <option value="">.:: Pilih ::.</option>
+                            {% for tanggungan in resp_tanggungan %}
+                            <option value="{{tanggungan.id}}"
+                              {{'selected' if resp_ukt.id_tanggungan == tanggungan.id}}>{{ tanggungan.tanggungan}}
+                            </option>
+                            {% endfor %}
+                          </select>
+                        </fieldset>
 
                         <div class="col-md-4">
                           <label>Penerima PKH/KKS</label>

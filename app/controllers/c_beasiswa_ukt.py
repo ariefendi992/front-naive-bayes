@@ -164,7 +164,12 @@ def getByIdUkt():
         r_penghasilan = requests.get(url_penghasilan).json()
         resp_penghasilan = r_penghasilan['data']
 
-        return render_template('edit-ukt.html', admin=session, resp_ukt=resp_ukt, resp_user=resp_user, resp_prodi=resp_prodi, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan)
+        # get  tanggungan 
+        url_tanggungan = base_url + '/kategori/tanggungan'
+        req_tanggungan = requests.get(url_tanggungan).json()
+        resp_tanggungan = req_tanggungan['data']
+
+        return render_template('edit-ukt.html', admin=session, resp_tanggungan=resp_tanggungan, resp_ukt=resp_ukt, resp_user=resp_user, resp_prodi=resp_prodi, resp_sms=resp_sms, resp_penghasilan=resp_penghasilan)
 
     else:
         return redirect(url_for('auth.login'))
@@ -175,6 +180,7 @@ def getByIdUkt():
 @ukt.route('/update', methods=['POST', 'PUT'])
 def updateUkt():
     if 'admin' in session:
+        
         nik = request.form.get('nik')
         prodi = request.form.get('prodi')
         sms = request.form.get('semester')
@@ -192,7 +198,7 @@ def updateUkt():
             "status_mhs": status_mhs,
             "kip_bm": kip,
             "id_penghasilan": penghasilan,
-            "tanggungan": tanggungan,
+            "id_tanggungan": tanggungan,
             "pkh_kks": pkh,
             "keputusan": keputusan
         })
@@ -205,6 +211,7 @@ def updateUkt():
         r = requests.put(url + f'?id={id}', headers=headers, data=payload)
 
         if r.status_code == 201:
+            flash(message=f'Data telah di perbaharui', category='success')
             return redirect(url_for('ukt.indexUkt'))
         else:
             return redirect(url_for('ukt.getByIdUkt'))

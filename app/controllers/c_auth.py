@@ -1,3 +1,4 @@
+from functools import wraps
 import json
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from app.lib.forms.forms_login import FormLogin
@@ -5,6 +6,16 @@ from app.url import base_url
 import requests
 
 auth = Blueprint('auth', __name__, template_folder='../templates/auth/')
+
+
+def login_dulu(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'admin' in session:
+            return f(*args, **kwargs)
+        else:
+            return redirect(url_for('auth.login'))
+    return wrap
 
 @auth.route('/login', methods=['POST','GET'])
 def login():

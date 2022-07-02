@@ -1,5 +1,6 @@
 import json
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
+from app.controllers.c_auth import login_dulu
 from app.url import *
 from app.lib.forms.forms_user import FormRegisterUser
 import requests
@@ -17,8 +18,9 @@ for i in response:
 
 # dashboard
 @admin.route('/', methods=['GET', 'POST'])
+@login_dulu
 def adminDashboard():
-    if 'admin' in session:
+    # if 'admin' in session:
         url = base_url + '/total-data'
         r = requests.get(url).json()
         data = r.get('data')
@@ -31,8 +33,8 @@ def adminDashboard():
         print('session ==', session )
 
         return render_template('dashboard.html', admin=session, ukt=ukt, user=user, user_login=user_login, data_uji=data_uji)
-    else:
-        return redirect(url_for('auth.login'))
+    # else:
+        # return redirect(url_for('auth.login'))
 
 # User all data
 @admin.route('/users', methods=['GET', 'POST'])

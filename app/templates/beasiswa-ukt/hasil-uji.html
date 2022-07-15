@@ -121,13 +121,7 @@ Hasil Uji
                           <td>{{ response.layak.p_sms_layak }}</td>
                           <td>{{ response.tidak.p_sms_tidak }}</td>
                         </tr>
-                        <tr>
-                          <td>Status Mahasiswa</td>
-                          <td>:</td>
-                          <td>{{ pay.status_mhs | capitalize }}</td>
-                          <td>{{ response.layak.p_status_mhs_layak }}</td>
-                          <td>{{ response.tidak.p_status_mhs_tidak }}</td>
-                        </tr>
+                       
                         <tr>
                           <td>Penerima KIP</td>
                           <td>:</td>
@@ -192,7 +186,6 @@ Hasil Uji
                           <td>
                             {{ response.layak.p_prodi_layak}} x
                             {{ response.layak.p_sms_layak}} x
-                            {{ response.layak.p_status_mhs_layak}} x
                             {{ response.layak.p_kip_layak}} x
                             {{ response.layak.p_penghasilan_layak}} x
                             {{ response.layak.p_tanggungan_layak}} x
@@ -209,7 +202,6 @@ Hasil Uji
                           <td>
                             {{ response.tidak.p_prodi_tidak}} x
                             {{ response.tidak.p_sms_tidak}} x
-                            {{ response.tidak.p_status_mhs_tidak}} x
                             {{ response.tidak.p_kip_tidak}} x
                             {{ response.tidak.p_penghasilan_tidak}} x
                             {{ response.tidak.p_tanggungan_tidak}} x

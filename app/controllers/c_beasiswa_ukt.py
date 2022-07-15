@@ -52,7 +52,6 @@ def tambahDataUkt():
         for i in resp_sms:
             select_semester.append((i['id'], i['semester']))
 
-        select_status_mhs = [('', '..:: Pilih ::..'), ('aktif', 'Aktif'), ('cuti', 'Cuti')]
         
         select_kip = [('', '..:: Pilih ::..'), ('terima', 'Terima'), ('tidak', 'Tidak')]
 
@@ -81,7 +80,6 @@ def tambahDataUkt():
         form.idUser.choices = select_idUser
         form.prodi.choices = select_prodi
         form.sms.choices = select_semester
-        form.statusMhs.choices = select_status_mhs
         form.kip.choices = select_kip
         form.penghasilan.choices = select_penghasilan
         form.tanggungan.choices = select_tanggungan
@@ -90,10 +88,8 @@ def tambahDataUkt():
 
         if form.validate_on_submit() :
             id_user = form.idUser.data
-            nik = form.nik.data
             prodi = form.prodi.data
             sms = form.sms.data
-            status_mhs = form.statusMhs.data
             kip = form.kip.data
             penghasilan = form.penghasilan.data
             tanggungan = form.tanggungan.data
@@ -108,10 +104,8 @@ def tambahDataUkt():
             }
             payload = json.dumps({
                 'id_user': id_user,
-                'nik': nik,
                 'id_prodi': prodi,
                 'id_semester': sms,
-                'status_mhs': status_mhs,
                 'kip_bm': kip,
                 'id_penghasilan': penghasilan,
                 'id_tanggungan': tanggungan,
@@ -181,10 +175,8 @@ def getByIdUkt():
 def updateUkt():
     if 'admin' in session:
         
-        nik = request.form.get('nik')
         prodi = request.form.get('prodi')
         sms = request.form.get('semester')
-        status_mhs = request.form.get('status_mhs')
         kip = request.form.get('kip')
         penghasilan = request.form.get('penghasilan_orang_tua')
         tanggungan = request.form.get('tanggungan')
@@ -192,10 +184,8 @@ def updateUkt():
         keputusan = request.form.get('keputusan')
 
         payload = json.dumps({
-            "nik": nik,
             "id_prodi": prodi,
             "id_semester": sms,
-            "status_mhs": status_mhs,
             "kip_bm": kip,
             "id_penghasilan": penghasilan,
             "id_tanggungan": tanggungan,
@@ -271,7 +261,6 @@ def ujiUkt():
         for i in resp_sms:
             select_semester.append((i['id'], i['semester']))
 
-        select_status_mhs = [('', '..:: Pilih ::..'), ('aktif', 'Aktif'), ('cuti', 'Cuti')]
         
         select_kip = [('', '..:: Pilih ::..'), ('terima', 'Terima'), ('tidak', 'Tidak')]
 
@@ -298,7 +287,6 @@ def ujiUkt():
         form.idUser.choices = select_idUser
         form.prodi.choices = select_prodi
         form.sms.choices = select_semester
-        form.statusMhs.choices = select_status_mhs
         form.kip.choices = select_kip
         form.penghasilan.choices = select_penghasilan
         form.tanggungan.choices = select_tanggungan
@@ -310,7 +298,6 @@ def ujiUkt():
             id_user = form.idUser.data
             prodi = form.prodi.data
             sms = form.sms.data
-            status_mhs = form.statusMhs.data
             kip = form.kip.data
             penghasilan = form.penghasilan.data
             tanggungan = form.tanggungan.data
@@ -340,7 +327,6 @@ def ujiUkt():
                 "id_user" : id_user,
                 "id_prodi": int(prodi),
                 "id_semester": int(sms),
-                "status_mhs": status_mhs,
                 "kip_bm": kip,
                 "id_penghasilan": int(penghasilan),
                 "id_tanggungan": tanggungan,
@@ -379,7 +365,6 @@ def prediksi():
             id_user = form.idUser.data
             prodi = form.prodi.data
             sms = form.sms.data
-            status_mhs = form.statusMhs.data
             kip = form.kip.data
             penghasilan = form.penghasilan.data
             tanggungan = form.tanggungan.data
@@ -407,7 +392,6 @@ def prediksi():
                 "id_user" : id_user,
                 "id_prodi": int(prodi),
                 "id_semester": int(sms),
-                "status_mhs": status_mhs,
                 "kip_bm": kip,
                 "id_penghasilan": int(penghasilan),
                 "id_tanggungan": tanggungan,

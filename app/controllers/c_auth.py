@@ -45,19 +45,24 @@ def login():
 
         resp = requests.post(url=url, headers=headers, data=payload)     
         json_resp = resp.json()
+        jres = json_resp['status'] if resp.status_code == 200 else 'salah'
+        
        
-        if json_resp['status'] == 'admin':
+        if jres == 'admin':
             session['username'] = json_resp['username']
             session['admin'] = json_resp['status']
             session.permanent = True
             flash(message=f'Login Sukses. selamat datang {json_resp["status"]}', category='success')
             return redirect(url_for('admin.adminDashboard'))
+        else:
+            flash(message='Login Gagal.! Periksa kembali username & password.')
+            return render_template('login.html', form=form)
     else:
         if 'admin' in session:
             return redirect(url_for('admin.adminDashboard'))
         return render_template('login.html', form=form)
 
-    return render_template('login.html', form=form)
+    # return render_template('login.html', form=form)
 
 
 @auth.route('/logout')

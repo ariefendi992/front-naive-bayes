@@ -52,18 +52,10 @@ Edit Data Pendaftar
                         <div class="col-md-8 form-group">
                           {% for user in resp_user %}
                           {% if resp_ukt.id_user == user.id %}
-                          <input type="text" id="nik-id" class="form-control form-control-sm" name="id_user"
+                          <input type="text" id="user-id" class="form-control form-control-sm" name="id_user"
                             placeholder="Nama Mahasiswa" value="{{ user.nama}}" disabled>
                           {% endif %}
                           {% endfor %}
-                        </div>
-
-                        <div class="col-md-4">
-                          <label>NIK</label>
-                        </div>
-                        <div class="col-md-8 form-group">
-                          <input type="text" id="nik-id" class="form-control form-control-sm" name="nik"
-                            placeholder="No. Induk KTP" value="{{ resp_ukt.nik}}">
                         </div>
 
                         <div class="col-md-4">
@@ -90,19 +82,6 @@ Edit Data Pendaftar
                             <option value="{{sms.id}}" {{'selected' if resp_ukt.id_sms == sms.id else '' }}>
                               {{sms.semester}}</option>
                             {% endfor %}
-                          </select>
-                        </fieldset>
-
-                        <div class="col-md-4">
-                          <label>Status Mahasiswa</label>
-                        </div>
-                        <fieldset class="col-md-8 form-group">
-                          <select class="form-select form-select-sm" name="status_mhs">
-                            <option value="">.:: Pilih ::.</option>
-                            <option value="aktif" {{ 'selected' if resp_ukt.status_mhs == 'aktif' else '' }}>Aktif
-                            </option>
-                            <option value="cuti" {{ 'selected' if resp_ukt.status_mhs == 'cuti' else '' }}>Cuti
-                            </option>
                           </select>
                         </fieldset>
 

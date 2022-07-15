@@ -96,23 +96,6 @@ Data Testing
                         </div>
                         
                         <div class="col-md-4">
-                          {{ form.statusMhs.label }}
-                        </div>
-                        <div class="col-md-8 form-group">
-                          {% if form.statusMhs.errors %}
-                          {{ form.statusMhs(class="form-select form-select-sm is-invalid") }}
-                          {% for error in form.statusMhs.errors %}
-                          <div class="invalid-feedback">{{error}}</div>
-                          {% endfor %}
-                          {% elif form.statusMhs.data %}
-                          {{ form.statusMhs(class="form-select form-select-sm")}}
-                          <div class="valid-feedback"></div>
-                          {% else %}                            
-                          {{ form.statusMhs(class="form-select form-select-sm")}}
-                          {% endif %}
-                        </div>
-                        
-                        <div class="col-md-4">
                           {{ form.kip.label }}
                         </div>
                         <div class="col-md-8 form-group">
@@ -223,16 +206,7 @@ Data Testing
                           </select>
                         </fieldset>
 
-                        <div class="col-md-4">
-                          <label>Status Mahasiswa</label>
-                        </div>
-                        <fieldset class="col-md-8 form-group">
-                          <select class="form-select form-select-sm" name="status_mhs">
-                            <option value="">.:: Pilih ::.</option>
-                            <option value="aktif">Aktif</option>
-                            <option value="cuti">Cuti</option>
-                          </select>
-                        </fieldset>
+                       
 
                         <div class="col-md-4">
                           <label>Penerima KIP/Bidik Misi</label>

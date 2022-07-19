@@ -20,9 +20,9 @@ class FormRegisterUser(FlaskForm):
         self.msg = msg
    
    
-    # url = base_url + '/auth/get-stambuk'
-    # req = requests.get(url)
-    # resp = req.json().get('data')
+    url = base_url + '/auth/get-stambuk'
+    req = requests.get(url)
+    resp = req.json().get('data')
 
     def validate_stambuk(self, stambuk):
         if stambuk.data == "":

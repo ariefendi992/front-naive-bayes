@@ -38,6 +38,7 @@ def adminDashboard():
 
 # User all data
 @admin.route('/users', methods=['GET', 'POST'])
+@login_dulu
 def userData():
     if 'admin' in session:
 
@@ -71,6 +72,7 @@ def userLogin():
 
 # user add
 @admin.route('/user-add', methods=['GET', 'POST'])
+@login_dulu
 def userAdd(): 
     if 'admin' in session:  
         select_gender = [("","..:: Pilih ::.."),("laki-laki","Laki-Laki"),("perempuan","Perempuan")]
@@ -119,6 +121,7 @@ def userAdd():
 
 # get user by id
 @admin.route('/edit-user', methods=['POST', 'GET'])
+@login_dulu
 def userById():
     if 'admin' in session:
         id = request.args.get('id')
@@ -136,6 +139,7 @@ def userById():
 
 # edit user
 @admin.route('/update', methods=['PUT', 'PATCH', 'POST'])
+@login_dulu
 def userEdit():
     if 'admin' in session:
         stambuk = request.form.get('nim')
@@ -171,6 +175,7 @@ def userEdit():
 
 # delete user
 @admin.route('/delete-user', methods=['POST', 'GET', 'DELETE'])
+@login_dulu
 def userDelete():
     if 'admin' in session:
         id = request.args.get('id')

@@ -8,6 +8,9 @@ Data Hasil Testing
 <link rel="stylesheet"
   href="{{ url_for('static', filename='vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='vendors/fontawesome/all.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/simple-datatables.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='extensions/simple-datatables/style.css') }}">
+
 <style>
   table.dataTable td {
     padding: 15px 8px;
@@ -36,7 +39,7 @@ Data Hasil Testing
               {# <hr> #}
               <h5 class="card-title">Riwayat Hasil Testing Data</h5>
               <div class="table-responsive-sm">
-                <table class="table">
+                <table class="table table-striped" id="table1">
                   <thead>
                     <tr>
                       <th>Nama Mahasiswa</th>
@@ -132,4 +135,6 @@ Data Hasil Testing
 <script src="{{ url_for('static', filename='vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js')}}">
 </script>
 <script src="{{ url_for('static', filename='vendors/fontawesome/all.min.js')}}"></script>
+<script src="{{ url_for('static', filename='extensions/simple-datatables/umd/simple-datatables.js')}}"></script>
+<script src="{{ url_for('static', filename='js/pages/simple-datatables.js')}}"></script>
 {% endblock  %}

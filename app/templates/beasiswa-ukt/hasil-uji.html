@@ -147,7 +147,7 @@ Hasil Uji
                           <td>:</td>
                           <td> 
                             {% for jt in resp_tanggungan %}
-                            {% if jt.id == pay.id_penghasilan %}
+                            {% if jt.tanggungan == pay.id_tanggungan %}
                             {{ jt.tanggungan}}
                             {% endif %}
                             {% endfor %}
@@ -161,6 +161,14 @@ Hasil Uji
                           <td>{{ pay.pkh_kks | capitalize}}</td>
                           <td>{{ response.layak.p_pkh_layak }}</td>
                           <td>{{ response.tidak.p_pkh_tidak }}</td>
+                        </tr>
+
+                        <tr>
+                          <td><b>Total</b></td>
+                          <td>:</td>
+                          <td></td>
+                          <td>{{response.total_p_x_keputusan_layak}}</td>
+                          <td>{{response.total_p_x_keputusan_tidak}}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -181,6 +189,33 @@ Hasil Uji
                       </thead>
                       <tbody>
                         <tr>
+                          <td>P(Layak) * Total Layak</td>
+                          <td class="text-center">:</td>
+                          <td>
+                            
+                            {{response.total_p_x_keputusan_layak}} x 
+                            {{response.prob_keputusan_layak}}
+                            
+                          </td>
+                          <td class="text-center">=</td>
+                          <td>                            
+                            {{ response.p_x_kep_layak }}                         
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>P(Layak) * Total Layak</td>
+                          <td class="text-center">:</td>
+                          <td>
+                            {{response.total_p_x_keputusan_tidak}} x 
+                            {{response.prob_keputusan_tidak}}
+                           
+                          </td>
+                          <td class="text-center">=</td>
+                          <td>
+                            {{ response.p_x_kep_tidak }}
+                          </td>
+                        </tr>
+                        {#<tr>
                           <td>P|C1 (Layak)</td>
                           <td class="text-center">:</td>
                           <td>
@@ -211,7 +246,7 @@ Hasil Uji
                           <td>
                             {{ response.p_x_kep_tidak }}
                           </td>
-                        </tr>
+                        </tr> #}
                       </tbody>
 
                     </table>

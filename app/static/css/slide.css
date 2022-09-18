@@ -1,0 +1,31 @@
+@charset "UTF=8";
+
+#SLIDE_BG {
+    width: 100%;
+    height: 100vh;
+    background-position: center center;
+    background-repeat: no-repeat;
+    backface-visibility: hidden;
+    background-size: cover;
+    animation: slideBg 60s linear infinite;
+    animation-timing-function: ease-in-out;
+    background-image: url('../images/slide/img1.jpeg');
+}
+
+@keyframes slideBg {
+    0% {
+        background-image: url('../images/slide/img1.jpeg');
+    }
+    25% {
+        background-image: url('../images/slide/img2.jpeg');
+    }
+    50% {
+        background-image: url('../images/slide/img3.jpeg');
+    }
+    /* 75% {
+        background-image: url('../images/slide/img1.jpeg');
+    }
+    100% {
+        background-image: url('../images/slide/img3.jpeg');
+    } */
+}

@@ -1,3 +1,4 @@
+from email import header
 import json
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from app.controllers.c_auth import login_dulu
@@ -48,7 +49,9 @@ def userData():
 
         if r.status_code == 200:
             response = r.json()
-            return render_template('user-data.html', admin=session, response=response)
+            print(response)
+            file_url_download = base_url + '/download/file/' 
+            return render_template('user-data.html', admin=session, response=response, url=file_url_download)
         else:
             return r.json().get('msg')
     else:
@@ -188,4 +191,24 @@ def userDelete():
         return redirect(url_for('auth.login'))
 
 
+@admin.route('/verify-file', methods=['POST','GET'])
+@login_dulu
+def verify_file():
+    if 'admin' in session:
+        url = base_url + ('/auth/verify-file')
+        id = request.args.get('id')
+        
+        header = {
+            'Content-Type' : 'applications/json'
+        }
+        payload = {}
+        req = requests.put(url+f'?id={id}', headers=header, data=payload)
+        
+        if req.status_code == 200:
+            return redirect(url_for('admin.userData'))
+    
+    else:
+        return redirect(url_for('auth.login'))
 
+        
+        

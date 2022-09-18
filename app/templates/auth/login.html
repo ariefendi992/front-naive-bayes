@@ -32,6 +32,7 @@
       href="{{ url_for('static', filename='images/logo/uim.png') }}"
       type="image/x-icon"
     />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/slide.css')}}">
   </head>
 
   <style>
@@ -42,7 +43,6 @@
     
     body.my-login-page {
       /* background-color: #f1f1f1; */
-      background-image: url(../../static/images/bg.png);
       /* height: 100%; */
       background-position: center;
       background-repeat: no-repeat;
@@ -124,7 +124,8 @@
     }
   </style>
 
-  <body class="my-login-page">
+  <body class="my-login-page" id="SLIDE_BG">
+  <!-- <body class="my-login-page"> -->
     <section class="h-100">
       <div class="container h-100">
         <div class="row justify-content-md-center">

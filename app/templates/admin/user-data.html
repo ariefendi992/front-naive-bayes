@@ -41,7 +41,7 @@ Data Pengguna
                     <th>Nama</th>
                     <th>E-mail</th>
                     <th>Jenis Kelamin</th>
-                    <th>Created At</th>
+                    <th>Bekas</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
@@ -54,7 +54,17 @@ Data Pengguna
                     <td>{{data.nama}}</td>
                     <td>{{data.email}}</td>
                     <td>{{data.gender | capitalize }}</td>
-                    <td>{{data.created_at | dateTimeIndo2 }}</td>
+                    <td>
+                      <a class="btn btn-sm btn-outline-primary {{ 'btn-outline-secondary disabled' if data.berkas == None }}" href="{{ url}}{{data.berkas}}"
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Download File {{ data.berkas }}">
+                        <i class="fa fa-download"></i>
+                      </a>
+                      <a class="btn btn-sm btn-outline-success{{'btn-outline-secondary disabled' if data.berkas == None}} {{'disabled' if data.status_berkas == '1' }}" href="{{url_for('admin.verify_file', id=data.id)}}"
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Verifikasi berkas {{ data.nama }}">
+                        <i class="fa fa-check"></i>
+                      </a>
+                    </td>
+                    <!-- <td>{{data.created_at | dateTimeIndo2 }}</td> -->
                     <td>
                       <a class="btn btn-sm btn-outline-warning" href="{{url_for('admin.userById', id=data.id)}}"
                         data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data {{ data.nama }}">

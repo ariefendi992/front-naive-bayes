@@ -43,9 +43,8 @@ def adminDashboard():
 def userData():
     if 'admin' in session:
 
-        url = base_url+'/auth/get-all'
-        x = request.args.get('page')
-        r = requests.get(url + f'?page={x}')
+        url = base_url+'/auth//fetch-all-not-pagination'
+        r = requests.get(url)
 
         if r.status_code == 200:
             response = r.json()
@@ -56,6 +55,26 @@ def userData():
             return r.json().get('msg')
     else:
         return redirect(url_for('auth.login'))
+# old
+# # User all data
+# @admin.route('/users', methods=['GET', 'POST'])
+# @login_dulu
+# def userData():
+#     if 'admin' in session:
+
+#         url = base_url+'/auth/get-all'
+#         x = request.args.get('page')
+#         r = requests.get(url + f'?page={x}')
+
+#         if r.status_code == 200:
+#             response = r.json()
+#             print(response)
+#             file_url_download = base_url + '/download/file/' 
+#             return render_template('user-data.html', admin=session, response=response, url=file_url_download)
+#         else:
+#             return r.json().get('msg')
+#     else:
+#         return redirect(url_for('auth.login'))
 
 # user login data
 @admin.get('/users-login')

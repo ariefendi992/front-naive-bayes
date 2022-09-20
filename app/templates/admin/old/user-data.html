@@ -10,8 +10,6 @@ Data Pengguna
 <link rel="stylesheet"
   href="{{ url_for('static', filename='vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='vendors/fontawesome/all.min.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/simple-datatables.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='extensions/simple-datatables/style.css') }}">
 <style>
   table.dataTable td {
     padding: 15px 8px;
@@ -37,7 +35,7 @@ Data Pengguna
               <table class="table" id="table1">
                 <thead>
                   <tr>
-                    <th>No.</th>
+                    <!-- <th>No.</th> -->
                     <th></th>
                     <th>NIM</th>
                     <th>Nama</th>
@@ -50,7 +48,7 @@ Data Pengguna
                 <tbody>
                   {% for data in response.get('data') %}
                   <tr>
-                    <td>{{loop.index}}</td>
+                    <!-- <td>{{loop.index}}</td> -->
                     <td></td>
                     <td>{{data.stambuk}}</td>
                     <td>{{data.nama}}</td>
@@ -63,7 +61,7 @@ Data Pengguna
                       </a>
                       <a class="btn btn-sm btn-outline-success{{'btn-outline-secondary disabled' if data.berkas == None}} {{'disabled' if data.status_berkas == '1' }}" href="{{url_for('admin.verify_file', id=data.id)}}"
                         data-bs-toggle="tooltip" data-bs-placement="top" title="Verifikasi berkas {{ data.nama }}">
-                        <i class="fa fa-check {{'fa fa-check-double' if data.status_berkas == '1'}}"></i>
+                        <i class="fa fa-check"></i>
                       </a>
                     </td>
                     <!-- <td>{{data.created_at | dateTimeIndo2 }}</td> -->
@@ -82,7 +80,38 @@ Data Pengguna
                   {% endfor %}
                 </tbody>
               </table>
-              
+              <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-primary pagination-sm justify-content-end">
+                  {% if response['meta']['has_prev'] %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ response.get('meta').get('prev_page')}}">
+                      <span aria-hidden="true"><i class="bi bi-chevron-left"></i></span>
+                    </a>
+                  </li>
+                  {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                      <span aria-hidden="true"><i class="bi bi-chevron-left"></i></span>
+                    </a>
+                  </li>
+                  {% endif %}
+                  {% for pages in range(response.get('meta').get('pages')) %}
+                  <li class="page-item {{'active' if pages == response.get('meta').get('page') -1 else ''}}"><a
+                      class="page-link" href="?page={{pages + 1}}">{{pages + 1}}</a></li>
+                  {% endfor %}
+                  {% if response['meta']['has_next'] %}
+                  <li class="page-item"><a class="page-link" href="?page={{ response.get('meta').get('next_page')}}">
+                      <span aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+                    </a></li>
+                  {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                      <span aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+                    </a>
+                  </li>
+                  {% endif %}
+                </ul>
+              </nav>
               </div>
             </div>
           </div>
@@ -95,11 +124,13 @@ Data Pengguna
 
 {% block js %}
 
-<script src="{{url_for('static', filename='vendors/jquery/jquery.min.js')}}"></script>
-<script src="{{ url_for('static', filename='vendors/jquery-datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ url_for('static', filename='vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js')}}">
+<script src="{{ url_for('static', filename='vendors/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatables/jquery.dataTables.min.js') }}">
 </script>
-<script src="{{ url_for('static', filename='vendors/fontawesome/all.min.js')}}"></script>
-<script src="{{ url_for('static', filename='extensions/simple-datatables/umd/simple-datatables.js')}}"></script>
-<script src="{{ url_for('static', filename='js/pages/simple-datatables.js')}}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js') }}">
+</script>
+<script src="{{ url_for('static', filename='vendors/fontawesome/all.min.js') }}"></script>
+
+
+<script src="{{ url_for('static', filename='js/mazer.js') }}"></script>
 {% endblock  %}
